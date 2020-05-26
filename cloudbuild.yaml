@@ -14,7 +14,7 @@ steps:
   # Build
   - name: node:12.16.1
     entrypoint: "npm"
-    args: ["run", "build:ssr"]
+    args: ["run", "prerender"]
 
   # Deploy
   - name: "gcr.io/cloud-builders/gcloud"

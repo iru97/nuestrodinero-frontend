@@ -1,0 +1,21 @@
+steps:
+  # Install
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["install"]
+
+  # Tests & coverage
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "test:coverage"]
+
+  # Upload coverage report
+  - name: 'gcr.io/cloud-builders/npm'  
+    args: ['run', 'codecov', '--', '--token=$_CODECOV_TOKEN', '--disable=detect', '--commit=$COMMIT_SHA', '--branch=$BRANCH_NAME']
+    
+  # Build
+  - name: node:12.16.1
+    entrypoint: "npm"
+    args: ["run", "build:ssr"]
+
+  # Deploy
+  - name: "gcr.io/cloud-builders/gcloud"
+    args: ["app", "deploy"]

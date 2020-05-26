@@ -1,0 +1,30 @@
+@import "./assets/styles/variables/colors";
+
+html,
+body {
+  height: 100%;
+  font-size: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.success-text {
+  color: $success;
+}
+
+.error-text {
+  color: $error;
+}
+
+.breakable-text {
+  word-break: break-all;
+}
+
+.section-title {
+  background-color: $info;
+  color: white;
+  padding: 0.1em;
+  border-radius: 5%;
+}

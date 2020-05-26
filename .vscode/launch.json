@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // puedes añadir todas la configuraciones que quieras con las distintas combinaciones de argumentos de jest
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest single run",
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest.js", // pues la ruta a la libreria de jest
+      "args": [
+        // y los argumentos que le pasamos (son los mismo que en el package.json)
+        "--verbose",
+        "-i",
+        "--no-cache"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest selected file run",
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest.js", // pues la ruta a la libreria de jest
+      "args": [
+        "${fileBasenameNoExtension}",
+        "--verbose",
+        "-i",
+        "--no-cache",
+        "--watchAll"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}

@@ -1,6 +1,13 @@
 import { Observable, Subscription, PartialObserver } from 'rxjs';
 import { Documento } from './models';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Renderer2,
+  ViewChild,
+  AfterViewChecked,
+} from '@angular/core';
 import { BoeService } from './services/boe.service';
 
 @Component({
@@ -8,15 +15,17 @@ import { BoeService } from './services/boe.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
   isLoading: boolean = true;
   loadingSubscription: Subscription;
   isLoadingObserver: PartialObserver<any[]>;
   ads$: Observable<Documento[]>;
+  @ViewChild('#bmc-wbtn', { static: false }) imgElement;
 
-  constructor(private boeService: BoeService) {}
+  constructor(private boeService: BoeService, private renderer: Renderer2) {}
 
   ngOnInit(): void {
+    this.changeBMCIcon();
     let today = this.getDateFormat();
     this.ads$ = this.boeService.getAds(today);
     this.loadingSubscription = this.ads$.subscribe(this.initObserver());
@@ -38,6 +47,15 @@ export class AppComponent implements OnInit, OnDestroy {
     let isoDate: string = isoDateTime.substring(0, tIndex);
 
     return isoDate.replace(/-/g, '');
+  }
+
+  changeBMCIcon(): void {
+    //this.renderer.selectRootElement();
+  }
+
+  ngAfterViewChecked(): void {
+    // let item = document.querySelector('#bmc-wbtn');
+    // console.log(item);
   }
 
   ngOnDestroy(): void {

@@ -5,7 +5,7 @@ import * as express from 'express';
 import { XMLHttpRequest } from 'xhr2';
 import { parseStringPromise } from 'xml2js';
 import { ajax, AjaxRequest } from 'rxjs/ajax';
-import { BOE, Documento } from 'src/app/models';
+import { BOE, Contract } from 'src/app/models';
 import { APP_BASE_HREF } from '@angular/common';
 import { AppServerModule } from './src/main.server';
 import { boeParser } from 'src/app/parsers/boe.parser';
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { of, Observable, forkJoin, PartialObserver } from 'rxjs';
 import { pluck, map, concatMap, switchMap } from 'rxjs/operators';
-import { documentoParser } from 'src/app/parsers/documento.parser';
+import { ContractParser } from 'src/app/parsers/Contract.parser';
 
 /////////////////////////////
 let baseUrl = `${environment.boeBaseUrl}${environment.boeApi}`;
@@ -29,23 +29,23 @@ const createAjaxConfig = (url: string): AjaxRequest => {
   };
 };
 
-const mapBoeToDocumentoCollection = ({
+const mapBoeToContractCollection = ({
   idAnuncio,
-}: BOE): Observable<Documento>[] => {
-  let observablesCollection: Observable<Documento>[] = idAnuncio.map(
+}: BOE): Observable<Contract>[] => {
+  let observablesCollection: Observable<Contract>[] = idAnuncio.map(
     (id: string) => {
-      return getDocumento(`${baseUrl}?id=${id}`);
+      return getContract(`${baseUrl}?id=${id}`);
     }
   );
 
   return observablesCollection;
 };
 
-const getDocumento = (url): Observable<Documento> => {
+const getContract = (url): Observable<Contract> => {
   return ajax(createAjaxConfig(url)).pipe(
     pluck('response'),
     concatMap((value) => parseStringPromise(value)),
-    map<any, Documento>(documentoParser)
+    map<any, Contract>(ContractParser)
   );
 };
 
@@ -75,24 +75,24 @@ export function app() {
     let boeId = req.query.id;
     let query = boeId ? `?id=${boeId}` : '';
 
-    const observable$: Observable<Documento[]> = ajax(
+    const observable$: Observable<Contract[]> = ajax(
       createAjaxConfig(`${baseUrl}${query}`)
     ).pipe(
       pluck('response'),
       concatMap<string, Promise<any>>((value) => parseStringPromise(value)),
       map<any, BOE>(boeParser),
-      map<BOE, Observable<Documento>[]>(mapBoeToDocumentoCollection),
-      switchMap<Observable<Documento>[], Observable<Documento[]>>((r) => {
+      map<BOE, Observable<Contract>[]>(mapBoeToContractCollection),
+      switchMap<Observable<Contract>[], Observable<Contract[]>>((r) => {
         return r.length ? forkJoin(r) : of([]);
       })
     );
 
-    const observer: PartialObserver<Documento[]> = {
-      next: (documentoCollection) => {
+    const observer: PartialObserver<Contract[]> = {
+      next: (ContractCollection) => {
         console.log(
-          `Succesfully retrieved ${documentoCollection.length} documents`
+          `Succesfully retrieved ${ContractCollection.length} documents`
         );
-        res.status(200).send(documentoCollection);
+        res.status(200).send(ContractCollection);
       },
       error: (err) => {
         console.warn('Error', err);

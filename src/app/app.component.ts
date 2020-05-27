@@ -1,5 +1,5 @@
 import { Observable, Subscription, PartialObserver } from 'rxjs';
-import { Documento } from './models';
+import { Contract } from './models';
 import {
   Component,
   OnInit,
@@ -8,7 +8,7 @@ import {
   ViewChild,
   AfterViewChecked,
 } from '@angular/core';
-import { BoeService } from './services/boe.service';
+import { BoeService } from './core/boe.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   loadingSubscription: Subscription;
   isLoadingObserver: PartialObserver<any[]>;
-  ads$: Observable<Documento[]>;
+  ads$: Observable<Contract[]>;
 
   constructor(
     private boeService: BoeService,

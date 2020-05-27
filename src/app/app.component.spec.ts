@@ -11,7 +11,7 @@ import {
   DescriptionComponent,
   DisplayListComponent,
   LabelValueComponent,
-  PoderAdjudicadorComponent,
+  ContractingAuthorityComponent,
   LoadingOverlayComponent,
   NoContentCardComponent,
 } from './components';
@@ -40,7 +40,7 @@ describe('AppComponent', () => {
         DescriptionComponent,
         DisplayListComponent,
         LabelValueComponent,
-        PoderAdjudicadorComponent,
+        ContractingAuthorityComponent,
         LoadingOverlayComponent,
         NoContentCardComponent,
         TituloPipe,

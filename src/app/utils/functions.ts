@@ -1,7 +1,7 @@
-import { IndicesStorage, Documento } from "../models";
-import { DD, DLContent, DLContainer } from "../mocks";
-import { documentoParser } from "../parsers/documento.parser";
-import { isArray } from "util";
+import { IndicesStorage, Contract } from '../models';
+import { DD, DLContent, DLContainer } from '../mocks';
+import { ContractParser } from '../parsers/Contract.parser';
+import { isArray } from 'util';
 
 export const extractorIndices = (
   collection: string[],
@@ -48,7 +48,7 @@ export const extractorIndices = (
 };
 
 export const normalizeString = (str: string, simbolos: RegExp) => {
-  let substr = str.replace(simbolos, "");
+  let substr = str.replace(simbolos, '');
 
   return substr.trim();
 };
@@ -71,14 +71,14 @@ export const indexStorageReducer = (
 
 export const getValorSeguro = (collection: DD, indice: number): string => {
   if (!collection || indice < 0) {
-    return "";
+    return '';
   }
 
-  return (collection[indice] as string) ?? "";
+  return (collection[indice] as string) ?? '';
 };
 
 export const replaceCommaWithDots = (str: string): number =>
-  str ? +str.replace(",", ".") : 0;
+  str ? +str.replace(',', '.') : 0;
 
 export const doRecursion = <T>(
   contenido: DLContent,
@@ -89,7 +89,7 @@ export const doRecursion = <T>(
   if (
     contenido.dt &&
     contenido.dt.length &&
-    typeof contenido.dd[0] === "string"
+    typeof contenido.dd[0] === 'string'
   ) {
     total.push(itemCreator(contenido));
     return total;
@@ -108,7 +108,7 @@ export const direccionBuilder = (
   content: DLContent
 ): string => {
   if (!collection || !collection.length) {
-    return "";
+    return '';
   }
 
   let [
@@ -148,8 +148,8 @@ export const adjustIndex = (
       localContent.dd.push(dd.shift());
       localContent.dt.push(dt.shift());
     } else {
-      localContent.dd.push("");
-      localContent.dt.push("");
+      localContent.dd.push('');
+      localContent.dt.push('');
     }
   });
 
@@ -188,5 +188,5 @@ export const numberOfFieldsWithValue = (
 };
 
 function isObject(o) {
-  return typeof o === "object";
+  return typeof o === 'object';
 }

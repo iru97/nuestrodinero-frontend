@@ -1,0 +1,20 @@
+<div
+  class="contracts-list"
+  *ngIf="contractsCollection$ | async as contractsCollection"
+>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start stretch"
+    fxLayoutGap="1em"
+    *ngIf="contractsCollection.length; else noContent"
+  >
+    <app-contract
+      *ngFor="let contract of contractsCollection"
+      [contract]="contract"
+    ></app-contract>
+  </div>
+</div>
+
+<ng-template #noContent>
+  <app-no-content-card></app-no-content-card>
+</ng-template>

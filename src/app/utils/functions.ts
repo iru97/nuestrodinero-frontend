@@ -1,7 +1,6 @@
-import { IndicesStorage, Contract } from '../models';
 import { DD, DLContent, DLContainer } from '../mocks';
-import { ContractParser } from '../parsers/Contract.parser';
 import { isArray } from 'util';
+import { IndicesStorage } from '../models/utils.models';
 
 export const extractorIndices = (
   collection: string[],

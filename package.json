@@ -1,5 +1,5 @@
 {
-  "name": "nuestro-dinero",
+  "name": "nuestrodinero-frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -11,10 +11,10 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "codecov": "codecov",
-    "dev:ssr": "ng run nuestro-dinero:serve-ssr",
-    "serve:ssr": "node dist/nuestro-dinero/server/main.js",
-    "build:ssr": "rimraf dist && ng build --prod && ng run nuestro-dinero:server:production",
-    "prerender": "rimraf dist && ng run nuestro-dinero:prerender"
+    "dev:ssr": "ng run nuestrodinero-frontend:serve-ssr",
+    "serve:ssr": "node dist/nuestrodinero-frontend/server/main.js",
+    "build:ssr": "rimraf dist && ng build --prod && ng run nuestrodinero-frontend:server:production",
+    "prerender": "rimraf dist && ng run nuestrodinero-frontend:prerender"
   },
   "private": true,
   "dependencies": {

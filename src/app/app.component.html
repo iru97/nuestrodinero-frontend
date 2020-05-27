@@ -1,9 +1,8 @@
 <app-header></app-header>
 <app-google-ad fxHide.lt-md></app-google-ad>
-<app-boe-content
-  [ads$]="ads$"
-  *ngIf="!isLoading; else asLoading"
-></app-boe-content>
+<div id="app-content">
+  <router-outlet></router-outlet>
+</div>
 <app-google-ad fxHide.lt-md></app-google-ad>
 <app-footer></app-footer>
 

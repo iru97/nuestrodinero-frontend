@@ -1,4 +1,3 @@
-import { BOE, defaultBOEVacio } from '../models';
 import {
   BoeAPiModel,
   Diario,
@@ -6,6 +5,7 @@ import {
   DepartamentoItem,
 } from '../mocks/boe.mock';
 import { FORMALIZACION_CONTRATOS } from '../core';
+import { BOE, defaultBOEVacio } from '../models/boe.model';
 
 export const boeParser = (input: BoeAPiModel): BOE => {
   let defaultBoe: BOE = defaultBOEVacio();

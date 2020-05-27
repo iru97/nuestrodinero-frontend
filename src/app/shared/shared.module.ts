@@ -25,6 +25,6 @@ const SHARED_MODULES = [
 @NgModule({
   declarations: [...SHARED_COMPONENTS],
   imports: [...SHARED_MODULES],
-  exports: [...SHARED_COMPONENTS],
+  exports: [...SHARED_COMPONENTS, ...SHARED_MODULES],
 })
 export class SharedModule {}

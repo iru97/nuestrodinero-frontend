@@ -5,7 +5,6 @@ import * as express from 'express';
 import { XMLHttpRequest } from 'xhr2';
 import { parseStringPromise } from 'xml2js';
 import { ajax, AjaxRequest } from 'rxjs/ajax';
-import { BOE, Contract } from 'src/app/models';
 import { APP_BASE_HREF } from '@angular/common';
 import { AppServerModule } from './src/main.server';
 import { boeParser } from 'src/app/parsers/boe.parser';
@@ -13,7 +12,9 @@ import { environment } from 'src/environments/environment';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { of, Observable, forkJoin, PartialObserver } from 'rxjs';
 import { pluck, map, concatMap, switchMap } from 'rxjs/operators';
-import { ContractParser } from 'src/app/parsers/Contract.parser';
+import { Contract } from 'src/app/contracts/components/contract/contract.model';
+import { BOE } from 'src/app/models/boe.model';
+import { contractParser } from 'src/app/parsers/contract.parser';
 
 /////////////////////////////
 let baseUrl = `${environment.boeBaseUrl}${environment.boeApi}`;
@@ -45,7 +46,7 @@ const getContract = (url): Observable<Contract> => {
   return ajax(createAjaxConfig(url)).pipe(
     pluck('response'),
     concatMap((value) => parseStringPromise(value)),
-    map<any, Contract>(ContractParser)
+    map<any, Contract>(contractParser)
   );
 };
 

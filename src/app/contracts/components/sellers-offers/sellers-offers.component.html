@@ -1,25 +1,25 @@
 <div>
   <span class="mat-h4 mat-body-strong section-title">Adjudicatarios</span>
   <div
-    *ngFor="let adjudicatario of adjudicatarios; index as i"
+    *ngFor="let seller of sellers; index as i"
     fxLayout.lt-md="column"
     fxLayoutAlign.lt-md="start stetch"
   >
     <div fxLayout="column" fxLayoutAlign="start stretch">
       <app-label-value label="Nombre">
-        {{ adjudicatario.nombre }}
+        {{ seller.name }}
       </app-label-value>
       <app-label-value label="NIF">
-        {{ adjudicatario.nif }}
+        {{ seller.nif }}
       </app-label-value>
       <app-label-value label="Dirección">
-        {{ adjudicatario.direccion }}
+        {{ seller.address }}
       </app-label-value>
       <app-label-value label="Objeto">
-        {{ valorOferta[i]?.medio }}
+        {{ offerValues[i]?.text }}
       </app-label-value>
       <app-label-value label="Coste">
-        {{ valorOferta[i]?.valor | currency: "EUR":"symbol":".2-2" }}
+        {{ offerValues[i]?.cost | currency: 'EUR':'symbol':'.2-2' }}
       </app-label-value>
     </div>
 

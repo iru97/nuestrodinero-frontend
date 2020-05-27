@@ -1,23 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
 import { ContractsComponent } from './contracts/contracts.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AppComponent,
-    children: [
-      {
-        path: 'contratos',
-        component: ContractsComponent,
-      },
-    ],
+    redirectTo: 'contratos',
+    pathMatch: 'full',
+  },
+  {
+    path: 'contratos',
+    component: ContractsComponent,
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

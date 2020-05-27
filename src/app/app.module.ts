@@ -1,11 +1,14 @@
-import { registerLocaleData } from '@angular/common';
-import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppComponent } from './app.component';
-import { BrowserModule } from '@angular/platform-browser';
+import localeEs from '@angular/common/locales/es';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import localeEs from '@angular/common/locales/es';
+import { SharedModule } from './shared/shared.module';
+import { AppRoutingModule } from './app-routing.module';
+import { ContractsModule } from './contracts/contracts.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +17,9 @@ import localeEs from '@angular/common/locales/es';
     FlexLayoutModule.withConfig({ ssrObserveBreakpoints: ['xs', 'lt-md'] }),
     HttpClientModule,
     BrowserAnimationsModule,
+    SharedModule,
+    AppRoutingModule,
+    ContractsModule,
   ],
   providers: [
     {

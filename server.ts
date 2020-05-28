@@ -15,6 +15,7 @@ import { pluck, map, concatMap, switchMap } from 'rxjs/operators';
 import { Contract } from 'src/app/contracts/components/contract/contract.model';
 import { BOE } from 'src/app/models/boe.model';
 import { contractParser } from 'src/app/parsers/contract.parser';
+import { BoeAPiModel } from 'src/app/mocks/boe.mock';
 
 /////////////////////////////
 let baseUrl = `${environment.boeBaseUrl}${environment.boeApi}`;
@@ -30,7 +31,7 @@ const createAjaxConfig = (url: string): AjaxRequest => {
   };
 };
 
-const mapBoeToContractCollection = ({
+const mapBoeToContractObservablesCollection$ = ({
   idAnuncio,
 }: BOE): Observable<Contract>[] => {
   let observablesCollection: Observable<Contract>[] = idAnuncio.map(
@@ -45,17 +46,44 @@ const mapBoeToContractCollection = ({
 const getContract = (url): Observable<Contract> => {
   return ajax(createAjaxConfig(url)).pipe(
     pluck('response'),
-    concatMap((value) => parseStringPromise(value)),
+    concatMap<string, Promise<any>>((value) => parseStringPromise(value)),
     map<any, Contract>(contractParser)
   );
 };
+
+const getContractCollection$ = (url: string): Observable<Contract[]> => {
+  return ajax(createAjaxConfig(`${url}`)).pipe(
+    pluck('response'),
+    concatMap<string, Promise<BoeAPiModel>>((value) =>
+      parseStringPromise(value)
+    ),
+    map<BoeAPiModel, BOE>(boeParser),
+    map<BOE, Observable<Contract>[]>(mapBoeToContractObservablesCollection$),
+    switchMap<Observable<Contract>[], Observable<Contract[]>>((r) => {
+      return r.length ? forkJoin(r) : of([]);
+    })
+  );
+};
+
+const buildObserver = (res): PartialObserver<Contract[]> => ({
+  next: (documentoCollection) => {
+    console.log(
+      `Succesfully retrieved ${documentoCollection.length} documents`
+    );
+    res.status(200).send(documentoCollection);
+  },
+  error: (err) => {
+    console.warn('Error', err);
+    res.status(err.status).send(err.error);
+  },
+});
 
 /////////////////////////////
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
   const server = express();
-  const distFolder = join(process.cwd(), 'dist/nuestro-dinero/browser');
+  const distFolder = join(process.cwd(), 'dist/nuestrodinero-frontend/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
     ? 'index.original.html'
     : 'index';
@@ -76,32 +104,13 @@ export function app() {
     let boeId = req.query.id;
     let query = boeId ? `?id=${boeId}` : '';
 
-    const observable$: Observable<Contract[]> = ajax(
-      createAjaxConfig(`${baseUrl}${query}`)
-    ).pipe(
-      pluck('response'),
-      concatMap<string, Promise<any>>((value) => parseStringPromise(value)),
-      map<any, BOE>(boeParser),
-      map<BOE, Observable<Contract>[]>(mapBoeToContractCollection),
-      switchMap<Observable<Contract>[], Observable<Contract[]>>((r) => {
-        return r.length ? forkJoin(r) : of([]);
-      })
+    const contractCollection$: Observable<Contract[]> = getContractCollection$(
+      `${baseUrl}${query}`
     );
 
-    const observer: PartialObserver<Contract[]> = {
-      next: (ContractCollection) => {
-        console.log(
-          `Succesfully retrieved ${ContractCollection.length} documents`
-        );
-        res.status(200).send(ContractCollection);
-      },
-      error: (err) => {
-        console.warn('Error', err);
-        res.status(err.status).send(err.error);
-      },
-    };
+    const observer: PartialObserver<Contract[]> = buildObserver(res);
 
-    observable$.subscribe(observer);
+    contractCollection$.subscribe(observer);
   });
 
   // Serve static files from /browser

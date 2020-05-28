@@ -1,9 +1,16 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Observable, Subscription, PartialObserver } from 'rxjs';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
+import { Subscription, PartialObserver } from 'rxjs';
 import { Contract } from './components/contract/contract.model';
 import { BoeService } from '../core';
 import { Title, Meta } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-contracts',
@@ -14,22 +21,28 @@ export class ContractsComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   loadingSubscription: Subscription;
   isLoadingObserver: PartialObserver<any[]>;
-  contractsCollection$: Observable<Contract[]>;
+  contractsCollection: Contract[] = [];
+  isBrowser: boolean;
 
   constructor(
     private boeService: BoeService,
     private title: Title,
-    private meta: Meta
-  ) {}
+    private meta: Meta,
+    @Inject(PLATFORM_ID) platformId: any
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngOnInit(): void {
     this.initMetatags();
 
-    let today = this.getDateFormat();
-    this.contractsCollection$ = this.boeService.getAds(today);
-    this.loadingSubscription = this.contractsCollection$.subscribe(
-      this.initObserver()
-    );
+    if (!this.isBrowser) {
+      let today = this.getDateFormat();
+
+      this.loadingSubscription = this.boeService
+        .getAds(today)
+        .subscribe(this.initObserver());
+    }
   }
 
   initMetatags(): void {
@@ -50,7 +63,7 @@ export class ContractsComponent implements OnInit, OnDestroy {
       },
       {
         name: 'og:url',
-        content: '/',
+        content: '/contratos',
       },
       {
         name: 'og:image',
@@ -61,8 +74,13 @@ export class ContractsComponent implements OnInit, OnDestroy {
 
   initObserver(): PartialObserver<any[]> {
     return {
+      next: this.handleNext.bind(this),
       complete: this.handleOnComplete.bind(this),
     };
+  }
+
+  handleNext(contracts: Contract[]): void {
+    this.contractsCollection = [...contracts];
   }
 
   handleOnComplete(): void {

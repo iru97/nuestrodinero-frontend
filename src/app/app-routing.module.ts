@@ -10,7 +10,8 @@ const routes: Routes = [
   },
   {
     path: 'contratos',
-    component: ContractsComponent,
+    loadChildren: () =>
+      import('./contracts/contracts.module').then((m) => m.ContractsModule),
   },
 ];
 

@@ -21,6 +21,8 @@ export const FECHA_ANUNCIO = 'Fecha de envío del anuncio';
 export const DESCRIPCION_LICITACION = 'Descripción de la licitación';
 export const CODIGO_CPV = 'Códigos CPV';
 export const FORMALIZACION_CONTRATOS = 'Anuncio de formalización de contratos';
+export const PYME = 'El adjudicatario es una PYME';
+
 // REGEXP
 export const enumeracionDeListasRegexp: RegExp = /([\d\.]+(?=\))|[:\)])/g;
 export const dotsCharsAndSpacesRegexp: RegExp = /[[\.a-z\s]+/g;

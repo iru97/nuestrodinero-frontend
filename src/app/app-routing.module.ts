@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ContractsComponent } from './contracts/contracts.component';
 
 const routes: Routes = [
   {
@@ -12,6 +11,11 @@ const routes: Routes = [
     path: 'contratos',
     loadChildren: () =>
       import('./contracts/contracts.module').then((m) => m.ContractsModule),
+  },
+  {
+    path: 'graphics',
+    loadChildren: () =>
+      import('./graphics/graphics.module').then((m) => m.GraphicsModule),
   },
 ];
 

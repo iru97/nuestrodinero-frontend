@@ -155,7 +155,7 @@
           "options": {
             "browserTarget": "nuestrodinero-frontend:build:production",
             "serverTarget": "nuestrodinero-frontend:server:production",
-            "routes": ["/", "/contratos"]
+            "routes": ["/", "/contratos", "/estadisticas"]
           },
           "configurations": {
             "production": {

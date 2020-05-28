@@ -6,6 +6,9 @@
     fxLayoutAlign.lt-md="start stetch"
   >
     <div fxLayout="column" fxLayoutAlign="start stretch">
+      <app-label-value label="PYME">
+        {{ seller.pyme | yesNo }}
+      </app-label-value>
       <app-label-value label="Nombre">
         {{ seller.name }}
       </app-label-value>

@@ -83,11 +83,13 @@ describe('sellers specs', () => {
         address: 'España.',
         nif: 'A28526275.',
         name: 'AERONAVAL DE CONSTRUCCIONES E INSTALACIONES, S.A.,.',
+        pyme: false,
       },
       {
         address: 'España.',
         nif: 'A28793917.',
         name: 'COMPUSOF, S.A.,.',
+        pyme: false,
       },
     ];
     // Act
@@ -126,6 +128,7 @@ describe('sellers specs', () => {
         address: 'España.',
         nif: '74918841K.',
         name: 'FRANCISCO JAVIER TORRES BARROSO.',
+        pyme: true,
       },
     ];
     // Act

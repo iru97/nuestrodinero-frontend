@@ -7,7 +7,7 @@ import {
   direccionBuilder,
   replaceCommaWithDots,
   doRecursion,
-} from "./functions";
+} from './functions';
 import {
   NOMBRE,
   NIF,
@@ -19,16 +19,19 @@ import {
   TELEFONO,
   EMAIL,
   WEB,
-} from "../core/const.api.model";
-import { IndicesStorage } from "../models/utils.models";
-import { DD, DLContent } from "../mocks";
-import { ofertasRecibidasCreator, OfertasRecibidas } from "../models";
+} from '../core/const.api.model';
+import { indexesStorage } from '../models/utils.models';
+import { DD, DLContent } from '../mocks';
+import {
+  OffersReceived,
+  offersReceivedCreator,
+} from '../contracts/components/sellers-offers/offersReceivedmodel';
 
-describe("utils specs", () => {
-  describe("extractor de indices specs", () => {
+describe('utils specs', () => {
+  describe('extractor de indices specs', () => {
     const undefinedCollection: string[] = undefined;
     const emtpyCollection: string[] = [];
-    const collection: string[] = ["A", "B", "C", "D"];
+    const collection: string[] = ['A', 'B', 'C', 'D'];
     const addressValues = [
       NOMBRE,
       NIF,
@@ -42,18 +45,18 @@ describe("utils specs", () => {
       WEB,
     ];
 
-    it("should return empty array if any collection its undefined", () => {
+    it('should return empty array if any collection its undefined', () => {
       const valorEsperado = [];
-      const resultado: IndicesStorage[] = extractorIndices(
+      const resultado: indexesStorage[] = extractorIndices(
         undefinedCollection,
         undefinedCollection
       );
       expect(valorEsperado).toStrictEqual(resultado);
     });
 
-    it("should return an IndexStorage array with the matching values", () => {
-      const valores: string[] = ["B", "C"];
-      const valorEsperado: IndicesStorage[] = [
+    it('should return an IndexStorage array with the matching values', () => {
+      const valores: string[] = ['B', 'C'];
+      const valorEsperado: indexesStorage[] = [
         {
           collectionIndex: 0,
           valorIndex: -1,
@@ -75,18 +78,18 @@ describe("utils specs", () => {
       expect(valorEsperado).toStrictEqual(resultado);
     });
 
-    it("arrays should be different if no values are matched", () => {
-      const valores: string[] = ["B", "C"];
-      const valorEsperado: IndicesStorage[] = [
+    it('arrays should be different if no values are matched', () => {
+      const valores: string[] = ['B', 'C'];
+      const valorEsperado: indexesStorage[] = [
         { collectionIndex: 1, valorIndex: 0 },
       ];
       const resultado = extractorIndices(collection, valores);
       expect(valorEsperado).not.toStrictEqual(resultado);
     });
 
-    it("should return an array of indexValue -1 for every non-matching value", () => {
-      const valores: string[] = ["X", "F"];
-      const valorEsperado: IndicesStorage[] = [
+    it('should return an array of indexValue -1 for every non-matching value', () => {
+      const valores: string[] = ['X', 'F'];
+      const valorEsperado: indexesStorage[] = [
         {
           collectionIndex: 0,
           valorIndex: -1,
@@ -108,21 +111,21 @@ describe("utils specs", () => {
       expect(valorEsperado).toStrictEqual(resultado);
     });
 
-    it("should return an IndexStorage array with the matching values", () => {
+    it('should return an IndexStorage array with the matching values', () => {
       const collection = [
-        "1.1) Nombre: ",
-        "1.2) Número de identificación fiscal: ",
-        "1.3) Dirección: ",
-        "1.4) Localidad: ",
-        "1.5) Provincia: ",
-        "1.6) Código postal: ",
-        "1.7) País: ",
-        "1.8) Código NUTS: ",
-        "1.11) Correo electrónico: ",
-        "1.13) Dirección del perfil de comprador: ",
+        '1.1) Nombre: ',
+        '1.2) Número de identificación fiscal: ',
+        '1.3) Dirección: ',
+        '1.4) Localidad: ',
+        '1.5) Provincia: ',
+        '1.6) Código postal: ',
+        '1.7) País: ',
+        '1.8) Código NUTS: ',
+        '1.11) Correo electrónico: ',
+        '1.13) Dirección del perfil de comprador: ',
       ];
 
-      const addressExpectedResult: IndicesStorage[] = [
+      const addressExpectedResult: indexesStorage[] = [
         {
           collectionIndex: 0,
           valorIndex: 0,
@@ -170,14 +173,14 @@ describe("utils specs", () => {
       expect(indices).toStrictEqual(addressExpectedResult);
     });
 
-    it("deber retornar un array de indices correctos cuando la collection tiene menos valores que el array de valores", () => {
+    it('should return an array of the same size', () => {
       const collection = [
-        "1.1) Nombre: ",
-        "1.2) Número de identificación fiscal: ",
-        "1.7) País: ",
+        '1.1) Nombre: ',
+        '1.2) Número de identificación fiscal: ',
+        '1.7) País: ',
       ];
 
-      const valorEsperado: IndicesStorage[] = [
+      const valorEsperado: indexesStorage[] = [
         {
           collectionIndex: 0,
           valorIndex: 0,
@@ -226,13 +229,13 @@ describe("utils specs", () => {
     });
   });
 
-  describe("normalizeString specs", () => {
-    it("debe retornar el texto trimeado y sin símbolos de puntiación", () => {
+  describe('normalizeString specs', () => {
+    it('should return a string without spaces and punctuation', () => {
       let charsToRemove = /[\.\d\):]/g;
 
-      const inputA = "1. texto: ";
-      const inputB = "1.2) texto: ";
-      const valorEsperado = "texto";
+      const inputA = '1. texto: ';
+      const inputB = '1.2) texto: ';
+      const valorEsperado = 'texto';
 
       const resultadoA = normalizeString(inputA, charsToRemove);
       const resultadoB = normalizeString(inputB, charsToRemove);
@@ -242,9 +245,9 @@ describe("utils specs", () => {
     });
   });
 
-  describe("index storage reducer specs", () => {
-    it("debe retornar -1 si no encuentra el elemento", () => {
-      const collection: IndicesStorage[] = [
+  describe('index storage reducer specs', () => {
+    it('should return -1 if the elemtn isnt found', () => {
+      const collection: indexesStorage[] = [
         {
           collectionIndex: 0,
           valorIndex: 1,
@@ -263,8 +266,8 @@ describe("utils specs", () => {
       expect(valorRecibido).toEqual(valorEsperado);
     });
 
-    it("debe retornar el indice correspondiente", () => {
-      const collection: IndicesStorage[] = [
+    it('should return the corresponding index', () => {
+      const collection: indexesStorage[] = [
         {
           collectionIndex: 0,
           valorIndex: 1,
@@ -284,8 +287,8 @@ describe("utils specs", () => {
       expect(valorRecibido).toEqual(expectedCollectionindex);
     });
 
-    it("debe retornar -1 si el indices es < 0 o la collection es undefined", () => {
-      const collection: IndicesStorage[] = [
+    it('should return -1 if the index is < 0 or the collection its undefined', () => {
+      const collection: indexesStorage[] = [
         {
           collectionIndex: 0,
           valorIndex: 1,
@@ -307,11 +310,11 @@ describe("utils specs", () => {
     });
   });
 
-  describe("getSafeValues specs", () => {
-    it("should return empty string if index is less than 0 or collection is undefined", () => {
+  describe('getSafeValues specs', () => {
+    it('should return empty string if index is less than 0 or collection is undefined', () => {
       // Arrange
       const collection: DD = [];
-      const expectedResult = "";
+      const expectedResult = '';
       // Act
       const receivedResultA = getValorSeguro(collection, -1);
       const receivedResultB = getValorSeguro(undefined, -1);
@@ -320,40 +323,40 @@ describe("utils specs", () => {
       expect(receivedResultB).toEqual(expectedResult);
     });
 
-    it("should return empty string if the index its not contained in the collection", () => {
+    it('should return empty string if the index its not contained in the collection', () => {
       // Arrange
       const collection: DD = [];
-      const expectedResult = "";
+      const expectedResult = '';
       // Act
       const receivedResultA = getValorSeguro(collection, 2);
       // Assert
       expect(receivedResultA).toEqual(expectedResult);
     });
 
-    it("should return empty string if the collection contains undefined", () => {
+    it('should return empty string if the collection contains undefined', () => {
       // Arrange
       const collection: DD = [undefined];
-      const expectedResult = "";
+      const expectedResult = '';
       // Act
       const receivedResultA = getValorSeguro(collection, 0);
       // Assert
       expect(receivedResultA).toEqual(expectedResult);
     });
 
-    it("should return the content as string of the given collection", () => {
+    it('should return the content as string of the given collection', () => {
       // Arrange
-      const collection: DD = ["value"];
-      const expectedResult = "value";
+      const collection: DD = ['value'];
+      const expectedResult = 'value';
       // Act
       const receivedResultA = getValorSeguro(collection, 0);
       // Assert
       expect(receivedResultA).toEqual(expectedResult);
     });
 
-    it("should return emtpy string if the index its out of range", () => {
+    it('should return emtpy string if the index its out of range', () => {
       // Arrange
-      const collection: DD = ["value"];
-      const expectedResult = "";
+      const collection: DD = ['value'];
+      const expectedResult = '';
       // Act
       const receivedResultA = getValorSeguro(collection, 2);
       // Assert
@@ -361,16 +364,16 @@ describe("utils specs", () => {
     });
   });
 
-  describe("adjust index specs", () => {
-    const indexesUndefined: IndicesStorage[] = undefined;
-    const indexesEmpty: IndicesStorage[] = [];
-    const indexesOne: IndicesStorage[] = [
+  describe('adjust index specs', () => {
+    const indexesUndefined: indexesStorage[] = undefined;
+    const indexesEmpty: indexesStorage[] = [];
+    const indexesOne: indexesStorage[] = [
       {
         collectionIndex: 2,
         valorIndex: -1,
       },
     ];
-    const indexesTwo: IndicesStorage[] = [
+    const indexesTwo: indexesStorage[] = [
       {
         collectionIndex: 0,
         valorIndex: -1,
@@ -386,7 +389,7 @@ describe("utils specs", () => {
       dd: [],
     };
 
-    it("should return dlContent of the same length than indexStorage (undefined)", () => {
+    it('should return dlContent of the same length than indexStorage (undefined)', () => {
       // Arrange
       const expectedResult: DLContent = {
         dt: [],
@@ -401,7 +404,7 @@ describe("utils specs", () => {
       expect(receivedResult.dd).toHaveLength(0);
       expect(receivedResult).toStrictEqual(expectedResult);
     });
-    it("should return dlContent of the same length than indexStorage (0 values)", () => {
+    it('should return dlContent of the same length than indexStorage (0 values)', () => {
       // Arrange
       const expectedResult: DLContent = {
         dt: [],
@@ -413,11 +416,11 @@ describe("utils specs", () => {
       expect(receivedResult.dd.length).toEqual(indexesEmpty.length);
       expect(receivedResult).toStrictEqual(expectedResult);
     });
-    it("should return dlContent of the same length than indexStorage (1 value)", () => {
+    it('should return dlContent of the same length than indexStorage (1 value)', () => {
       // Arrange
       const expectedResult: DLContent = {
-        dt: [""],
-        dd: [""],
+        dt: [''],
+        dd: [''],
       };
       // Act
       const receivedResult: DLContent = adjustIndex(dlContent, indexesOne);
@@ -425,11 +428,11 @@ describe("utils specs", () => {
       expect(receivedResult.dd.length).toEqual(indexesOne.length);
       expect(receivedResult).toStrictEqual(expectedResult);
     });
-    it("should return dlContent of the same length than indexStorage (2 values)", () => {
+    it('should return dlContent of the same length than indexStorage (2 values)', () => {
       // Arrange
       const expectedResult: DLContent = {
-        dt: ["", ""],
-        dd: ["", ""],
+        dt: ['', ''],
+        dd: ['', ''],
       };
       // Act
       const receivedResult: DLContent = adjustIndex(dlContent, indexesTwo);
@@ -440,17 +443,17 @@ describe("utils specs", () => {
     });
   });
 
-  describe("directionBuilder specs", () => {
+  describe('directionBuilder specs', () => {
     const collectionUndefined: number[] = undefined;
     const collectionEmpty: number[] = [];
     const collection: number[] = [0, 1, 2];
     const content: DLContent = {
-      dt: ["street", "city", "country"],
-      dd: ["Av 1", "Madrid", "Spain"],
+      dt: ['street', 'city', 'country'],
+      dd: ['Av 1', 'Madrid', 'Spain'],
     };
-    it("should return empty string if collection is undefined", () => {
+    it('should return empty string if collection is undefined', () => {
       // Arrange
-      const expectedResult: string = "";
+      const expectedResult: string = '';
       // Act
       const receivedResult: string = direccionBuilder(
         collectionUndefined,
@@ -459,18 +462,18 @@ describe("utils specs", () => {
       // Assert
       expect(receivedResult).toEqual(expectedResult);
     });
-    it("should return empty string if collection is empty", () => {
+    it('should return empty string if collection is empty', () => {
       // Arrange
-      const expectedResult: string = "";
+      const expectedResult: string = '';
       // Act
       const receivedResult: string = direccionBuilder(collectionEmpty, content);
       // Assert
       expect(receivedResult).toEqual(expectedResult);
     });
 
-    it("should merge the address values of DLContent", () => {
+    it('should merge the address values of DLContent', () => {
       // Arrange
-      const expectedResult: string = "Av 1 Madrid Spain";
+      const expectedResult: string = 'Av 1 Madrid Spain';
       // Act
       const receivedResult: string = direccionBuilder(collection, content);
       // Assert
@@ -478,8 +481,8 @@ describe("utils specs", () => {
     });
   });
 
-  describe("replace comma with dots specs", () => {
-    it("should return 0 if the argument is undefined", () => {
+  describe('replace comma with dots specs', () => {
+    it('should return 0 if the argument is undefined', () => {
       // Arrange
       const str: string = undefined;
       const expectedResult = 0;
@@ -488,18 +491,18 @@ describe("utils specs", () => {
       // Assert
       expect(givenResult).toEqual(expectedResult);
     });
-    it("should return the string parsed as number with decimals", () => {
+    it('should return the string parsed as number with decimals', () => {
       // Arrange
-      const str: string = "22,15";
+      const str: string = '22,15';
       const expectedResult = 22.15;
       // Act
       const givenResult: number = replaceCommaWithDots(str);
       // Assert
       expect(givenResult).toEqual(expectedResult);
     });
-    it("should return the string parsed as number without decimals", () => {
+    it('should return the string parsed as number without decimals', () => {
       // Arrange
-      const str: string = "10";
+      const str: string = '10';
       const expectedResult = 10;
       // Act
       const givenResult: number = replaceCommaWithDots(str);
@@ -508,44 +511,44 @@ describe("utils specs", () => {
     });
   });
 
-  describe("doRecursion specs", () => {
+  describe('doRecursion specs', () => {
     const mocked: DLContent = {
       dd: [
         {
           dl: [
             {
-              dd: ["1"],
-              dt: ["11.1.1) Número de ofertas recibidas: "],
+              dd: ['1'],
+              dt: ['11.1.1) Número de ofertas recibidas: '],
             },
           ],
         },
         {
           dl: [
             {
-              dd: ["1"],
-              dt: ["11.2.1) Número de ofertas recibidas: "],
+              dd: ['1'],
+              dt: ['11.2.1) Número de ofertas recibidas: '],
             },
           ],
         },
       ],
-      dt: ["11.1) Contrato 2020C1AJ0189: ", "11.2) Contrato 2020C1AJ0189: "],
+      dt: ['11.1) Contrato 2020C1AJ0189: ', '11.2) Contrato 2020C1AJ0189: '],
     };
 
-    it("shoudl map the nested values recursively", () => {
-      const expectedResult: OfertasRecibidas[] = [
+    it('shoudl map the nested values recursively', () => {
+      const expectedResult: OffersReceived[] = [
         {
-          numOfertas: 1,
-          medio: "Número de ofertas recibidas",
+          totalOffers: 1,
+          text: 'Número de ofertas recibidas',
         },
         {
-          numOfertas: 1,
-          medio: "Número de ofertas recibidas",
+          totalOffers: 1,
+          text: 'Número de ofertas recibidas',
         },
       ];
 
-      const givenResult: OfertasRecibidas[] = doRecursion(
+      const givenResult: OffersReceived[] = doRecursion(
         mocked,
-        ofertasRecibidasCreator
+        offersReceivedCreator
       );
 
       expect(givenResult).toStrictEqual(expectedResult);

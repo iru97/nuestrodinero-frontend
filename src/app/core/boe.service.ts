@@ -13,9 +13,10 @@ export class BoeService {
 
   constructor(private http: HttpClient) {}
 
-  getAds(date: string): Observable<Contract[]> {
+  getAds(date: Date): Observable<Contract[]> {
+    let formattedDate = this.setDateFormat(date);
     return this.http
-      .get<Contract[]>(`${this.url}/api/boe?id=BOE-S-${date}`)
+      .get<Contract[]>(`${this.url}/api/boe?id=BOE-S-${formattedDate}`)
       .pipe(catchError(this.adErrHandler));
   }
 
@@ -23,5 +24,13 @@ export class BoeService {
     console.warn('BoeService warning -> ', err);
 
     return of([]);
+  }
+
+  setDateFormat(date: Date): string {
+    let isoDateTime: string = date.toISOString();
+    let tIndex: number = isoDateTime.indexOf('T');
+    let isoDate: string = isoDateTime.substring(0, tIndex);
+
+    return isoDate.replace(/-/g, '');
   }
 }

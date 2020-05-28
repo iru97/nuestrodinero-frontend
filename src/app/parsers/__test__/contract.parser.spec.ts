@@ -1,10 +1,9 @@
-import { contractParser } from '../Contract.parser';
 import {
   Contract,
   emptyContract,
 } from 'src/app/contracts/components/contract/contract.model';
 import { ContractMock } from 'src/app/mocks/documento.mock';
-import { contenidoMock } from 'src/app/mocks';
+import { contractParser } from '../contract.parser';
 
 describe('Contract parser specs', () => {
   it('should return default document if undefined is passed', () => {

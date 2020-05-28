@@ -7,19 +7,19 @@ import {
 } from 'src/app/contracts/components/sellers-offers/offersReceivedmodel';
 
 describe('ofertas recibidas specs', () => {
-  it('retorna un array vacio si se le pasa undefined', () => {
+  it('returns an empty array if undefined|null is passed', () => {
     const resultadoEsperado = [];
     const resultado = offersReceivedParser(undefined);
     expect(resultado).toEqual(resultadoEsperado);
   });
 
-  it('retorna el objeto por defecto si el contenido es undefined', () => {
+  it('returns empty offer if undefined|null is passed', () => {
     const expectedResult = emptyOffersReceived();
     const givenResult = offersReceivedCreator(undefined);
     expect(givenResult).toStrictEqual(expectedResult);
   });
 
-  it('retorna un array vacio si algun valor  no existe asociado', () => {
+  it('returns an empty array if we have no matches', () => {
     // Arrange
     const mock: DLContent = { ...contenidoMock[0] };
     const resultadoEsperado = [];
@@ -31,7 +31,7 @@ describe('ofertas recibidas specs', () => {
     expect(resultado).toStrictEqual(resultadoEsperado);
   });
 
-  it('retorna las ofertas recibidas con los valores asociados (nested)', () => {
+  it('parses offer received (nested)', () => {
     // Arrange
     const mock: DLContent = {
       dd: [
@@ -82,7 +82,7 @@ describe('ofertas recibidas specs', () => {
     expect(resultado).toStrictEqual(resultadoEsperado);
   });
 
-  it('retorna las ofertas recibidas con los valores asociados (no nested)', () => {
+  it('parses offer recevied (not nested)', () => {
     // Arrange
     const mock: DLContent = {
       dd: [

@@ -5,8 +5,8 @@ import {
 } from 'src/app/contracts/components/contracting-authority/contracting-authority.model';
 import { contractingAuthorityParser } from '../contracting-authority.parser';
 
-describe('poder adjudicador specs', () => {
-  it('retorna poder adjudicador por defecto si se le pasan parametros indefinidos', () => {
+describe('contracting authority specs', () => {
+  it('returns an empty contracting authority if null|undefined is passed', () => {
     // Arrange
     const resultadoEsperado = emptyContractingAuthority();
     // Act
@@ -15,7 +15,7 @@ describe('poder adjudicador specs', () => {
     expect(resultado).toStrictEqual(resultadoEsperado);
   });
 
-  it('retorna poder adjudicador por defecto si algun valor asociado', () => {
+  it('parses contracting authority #1 empty input', () => {
     // Arrange
     const mock: DLContent = { ...contenidoMock[0] };
     const resultadoEsperado = emptyContractingAuthority();
@@ -27,7 +27,7 @@ describe('poder adjudicador specs', () => {
     expect(resultado).toStrictEqual(resultadoEsperado);
   });
 
-  it('retorna poder adjudicador con los valores asociados', () => {
+  it('parses contracting authority #2 half input', () => {
     // Arrange
     const mock: DLContent = { ...contenidoMock[0] };
     const resultadoEsperado: ContractingAuthority = {
@@ -46,7 +46,7 @@ describe('poder adjudicador specs', () => {
     expect(resultado).toStrictEqual(resultadoEsperado);
   });
 
-  it('retorna poder adjudicador con los valores asociados si no tenemos el tipo/actividad', () => {
+  it('parses contracting authority #3 complete input', () => {
     // Arrange
     const mock: DLContent = { ...contenidoMock2[0] };
     const resultadoEsperado: ContractingAuthority = {

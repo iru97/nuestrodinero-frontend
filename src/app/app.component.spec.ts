@@ -1,27 +1,9 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {
-  HeaderComponent,
-  FooterComponent,
-  BoeContentComponent,
-  GoogleAdComponent,
-  AdjudicatariosOfertasComponent,
-  AnuncioComponent,
-  DescriptionComponent,
-  DisplayListComponent,
-  LabelValueComponent,
-  ContractingAuthorityComponent,
-  LoadingOverlayComponent,
-  NoContentCardComponent,
-} from './components';
 import { By } from '@angular/platform-browser';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { TituloPipe } from './pipes/titulo.pipe';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AppComponent } from './app.component';
+import { SharedModule } from './shared/shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -29,30 +11,8 @@ describe('AppComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        HeaderComponent,
-        FooterComponent,
-        BoeContentComponent,
-        GoogleAdComponent,
-        AdjudicatariosOfertasComponent,
-        AnuncioComponent,
-        DescriptionComponent,
-        DisplayListComponent,
-        LabelValueComponent,
-        ContractingAuthorityComponent,
-        LoadingOverlayComponent,
-        NoContentCardComponent,
-        TituloPipe,
-      ],
-      imports: [
-        HttpClientTestingModule,
-        MatToolbarModule,
-        MatDividerModule,
-        MatButtonModule,
-        MatCardModule,
-        MatProgressSpinnerModule,
-      ],
+      declarations: [AppComponent],
+      imports: [HttpClientTestingModule, SharedModule, RouterTestingModule],
     }).compileComponents();
   }));
 
@@ -78,25 +38,6 @@ describe('AppComponent', () => {
 
   it('should render google-ads components', () => {
     const element = fixture.debugElement.query(By.css('app-google-ad'));
-    expect(element).toBeTruthy();
-  });
-
-  it('should render loading symbol when loading', () => {
-    const element = fixture.debugElement.query(By.css('app-loading-overlay'));
-    expect(element).toBeTruthy();
-  });
-
-  it('should not render loading symbol when loading is not loading', () => {
-    component.isLoading = false;
-    fixture.detectChanges();
-    const element = fixture.debugElement.query(By.css('app-loading-overlay'));
-    expect(element).toBeFalsy();
-  });
-
-  it('should render boe-content when loading finishes', () => {
-    component.isLoading = false;
-    fixture.detectChanges();
-    const element = fixture.debugElement.query(By.css('app-boe-content'));
     expect(element).toBeTruthy();
   });
 });

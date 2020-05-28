@@ -27,7 +27,7 @@ describe('ContractingAuthorityComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render an adjudicador', () => {
+  it('should render a contracting authority', () => {
     const pAdjudicador: ContractingAuthority = emptyContractingAuthority();
     pAdjudicador.name = 'name';
 

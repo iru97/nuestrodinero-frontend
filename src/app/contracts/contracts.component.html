@@ -1,4 +1,4 @@
-<div class="contracts-list">
+<div class="contracts-list" *ngIf="!isLoading; else asLoading">
   <div
     fxLayout="column"
     fxLayoutAlign="start stretch"
@@ -14,4 +14,8 @@
 
 <ng-template #noContent>
   <app-no-content-card></app-no-content-card>
+</ng-template>
+
+<ng-template #asLoading>
+  <app-loading-overlay></app-loading-overlay>
 </ng-template>

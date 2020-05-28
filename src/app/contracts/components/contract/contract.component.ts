@@ -14,10 +14,10 @@ export class ContractComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.porcentaje = this.calcDocumentScore(this.contract);
+    this.porcentaje = this.calculateContractScore(this.contract);
   }
 
-  calcDocumentScore(item: Contract): number {
+  calculateContractScore(item: Contract): number {
     let total = numberOfFieldsWithValue(item, true);
     let value = numberOfFieldsWithValue(item, false);
 
@@ -26,12 +26,5 @@ export class ContractComponent implements OnInit {
 
   viewPdf(): void {
     window.open(`https://boe.es${this.contract.metadata.pdfUrl}`, '_blank');
-  }
-
-  getTotalSpent(): number {
-    return this.contract.content.offerValues.reduce(
-      (acc, curr) => acc + curr.cost,
-      0
-    );
   }
 }

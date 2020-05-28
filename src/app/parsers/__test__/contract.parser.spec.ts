@@ -4,6 +4,7 @@ import {
   emptyContract,
 } from 'src/app/contracts/components/contract/contract.model';
 import { ContractMock } from 'src/app/mocks/documento.mock';
+import { contenidoMock } from 'src/app/mocks';
 
 describe('Contract parser specs', () => {
   it('should return default document if undefined is passed', () => {
@@ -80,6 +81,7 @@ describe('Contract parser specs', () => {
         pdfUrl: '/boe/dias/2020/04/30/pdfs/BOE-B-2020-13137.pdf',
       },
     };
+
     const givenResult = contractParser(ContractMock);
     expect(givenResult).toStrictEqual(expectedResult);
   });

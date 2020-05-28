@@ -6,6 +6,7 @@ import { CONTRACTS_SHARED_COMPONENTS } from '../../shared';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { OfferValues } from '../sellers-offers/offerValues.model';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TotalCostPipe } from '../../pipes/total-cost.pipe';
 
 describe('ContractComponent', () => {
   let component: ContractComponent;
@@ -13,7 +14,11 @@ describe('ContractComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [...CONTRACT_COMPONENTS, ...CONTRACTS_SHARED_COMPONENTS],
+      declarations: [
+        ...CONTRACT_COMPONENTS,
+        ...CONTRACTS_SHARED_COMPONENTS,
+        TotalCostPipe,
+      ],
       imports: [SharedModule],
     }).compileComponents();
   }));
@@ -48,8 +53,8 @@ describe('ContractComponent', () => {
 
   it('should render with error-text class the percentage of information ', () => {
     // Act
-    const calcDocumentScoreStub = jest
-      .spyOn(component, 'calcDocumentScore')
+    const calculateContractScoreStub = jest
+      .spyOn(component, 'calculateContractScore')
       .mockReturnValue(50);
 
     component.ngOnInit();
@@ -60,15 +65,15 @@ describe('ContractComponent', () => {
     ).nativeElement;
 
     // Assert
-    expect(calcDocumentScoreStub).toHaveBeenCalled();
+    expect(calculateContractScoreStub).toHaveBeenCalled();
     expect(spanElement.textContent).toEqual(' 50 % de información ');
     expect(spanElement.className).toContain('error-text');
   });
 
   it('should render with error-text class the percentage of information ', () => {
     // Act
-    const calcDocumentScoreStub = jest
-      .spyOn(component, 'calcDocumentScore')
+    const calculateContractScoreStub = jest
+      .spyOn(component, 'calculateContractScore')
       .mockReturnValue(70);
 
     component.ngOnInit();
@@ -79,7 +84,7 @@ describe('ContractComponent', () => {
     ).nativeElement;
 
     // Assert
-    expect(calcDocumentScoreStub).toHaveBeenCalled();
+    expect(calculateContractScoreStub).toHaveBeenCalled();
     expect(spanElement.textContent).toEqual(' 70 % de información ');
     expect(spanElement.className).toContain('success-text');
   });
@@ -96,12 +101,7 @@ describe('ContractComponent', () => {
       },
     ];
     component.contract.content.offerValues = [...ofertas];
-
     // Act
-    const totalSpetStub = jest
-      .spyOn(component, 'getTotalSpent')
-      .mockReturnValue(4);
-
     fixture.detectChanges();
 
     const spanElement: HTMLSpanElement = fixture.debugElement.query(
@@ -109,7 +109,7 @@ describe('ContractComponent', () => {
     ).nativeElement;
 
     // Assert
-    expect(totalSpetStub).toHaveBeenCalled();
+
     expect(spanElement.textContent).toEqual('€4.00');
   });
 });

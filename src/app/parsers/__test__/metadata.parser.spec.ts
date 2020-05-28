@@ -6,14 +6,14 @@ import {
 import { metadataParser } from '../metadata.parser';
 
 describe('metadatos parser', () => {
-  it('retorna metadatos vacios si no se le pasa argumento', () => {
+  it('returns empty metadata if null|undefined is passed', () => {
     const resultadoEsperado = emptyMetadata();
     const resultado = metadataParser(undefined);
 
     expect(resultado).toEqual(resultadoEsperado);
   });
 
-  it('retorna metadatos segun el parametro pasado', () => {
+  it('parses metadata #1', () => {
     const resultadoEsperado: Metadata = {
       department: 'Ministerio de Cultura y Deporte',
       date: new Date(2020, 3, 30),
@@ -30,7 +30,7 @@ describe('metadatos parser', () => {
     expect(resultadoEsperado).toStrictEqual(resultado);
   });
 
-  it('retorna metadatos si le pasamos un objeto incompleto', () => {
+  it('parses metadata #2 half input', () => {
     const mockIncompleto = {
       ...metadatosMock,
       departamento: undefined,

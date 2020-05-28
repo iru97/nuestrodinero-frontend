@@ -6,22 +6,22 @@ import {
 import { contentParser } from '../content.parser';
 
 describe('texto parser specs', () => {
-  it('retorna en valor por defecto si se pasa null|undefined', () => {
+  it('should return an empty content if null|undefined are passed', () => {
     const valorEsperado: Content = emptyContent();
     const valor: Content = contentParser(undefined);
 
     expect(valor).toStrictEqual(valorEsperado);
   });
 
-  it('retorna el contenido parseado con los datos que se haya podido, en su defecto retornara ese obetjo en su forma porDefecto', () => {
+  it('returns the paresed content', () => {
     const mock = { ...contenidoMock };
     const resultado = contentParser(mock[0]);
     const resultadoEsperado: Content = {
       sellers: [
         {
-          name: 'España.',
+          address: 'España.',
           nif: 'A28526275.',
-          address: 'AERONAVAL DE CONSTRUCCIONES E INSTALACIONES, S.A.,.',
+          name: 'AERONAVAL DE CONSTRUCCIONES E INSTALACIONES, S.A.,.',
         },
         {
           address: 'España.',

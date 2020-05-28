@@ -7,7 +7,7 @@ const mock = () => {
     getItem: (key: string) => (key in storage ? storage[key] : null),
     setItem: (key: string, value: string) => (storage[key] = value || ''),
     removeItem: (key: string) => delete storage[key],
-    clear: () => (storage = {})
+    clear: () => (storage = {}),
   };
 };
 
@@ -24,6 +24,22 @@ Object.defineProperty(document.body.style, 'transform', {
       configurable: true,
     };
   },
+});
+
+Object.defineProperty(window, 'matchMedia', {
+  value: () => ({
+    matches: false,
+    addListener: () => {},
+    removeListener: () => {},
+  }),
+});
+
+Object.defineProperty(window, 'getComputedStyle', {
+  value: () => ({
+    getPropertyValue: (prop) => {
+      return '';
+    },
+  }),
 });
 
 /* output shorter and more meaningful Zone error stack traces */

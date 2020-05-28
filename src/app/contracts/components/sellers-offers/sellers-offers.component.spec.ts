@@ -34,7 +34,7 @@ describe('AdjudicatariosOfertasComponent', () => {
     expect(component.offersReceived).toHaveLength(0);
   });
 
-  it('should render a list of adjudicatarios', () => {
+  it('should render a list of sellers', () => {
     const adjudicatarios: Seller[] = [
       {
         name: 'name',

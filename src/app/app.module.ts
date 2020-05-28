@@ -18,7 +18,6 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserAnimationsModule,
     SharedModule,
     AppRoutingModule,
-    // ContractsModule,
   ],
   providers: [
     {

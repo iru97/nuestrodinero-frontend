@@ -6,20 +6,20 @@ import {
   offerValueCreator,
 } from 'src/app/contracts/components/sellers-offers/offerValues.model';
 
-describe('valor ofertas specs', () => {
-  it('retorna un array vacio si se le pasa undefined', () => {
+describe('offers value specs', () => {
+  it('returns an empty array if undefined|null is passed', () => {
     const resultadoEsperado = [];
     const resultado = offerValuesParser(undefined);
     expect(resultado).toEqual(resultadoEsperado);
   });
 
-  it('retorna el objeto por defecto si el contenido es undefined', () => {
+  it('returns empty offer if undefined|null is passed', () => {
     const expectedResult = emptyOfferValue();
     const givenResult = offerValueCreator(undefined);
     expect(givenResult).toStrictEqual(expectedResult);
   });
 
-  it('retorna un array vacio si algun valor  no existe asociado', () => {
+  it('returns an empty array if we have no matches', () => {
     // Arrange
     const mock: DLContent = { ...contenidoMock[0] };
     const resultadoEsperado = [];
@@ -31,7 +31,7 @@ describe('valor ofertas specs', () => {
     expect(resultado).toStrictEqual(resultadoEsperado);
   });
 
-  it('retorna los valores de las ofertas con los valores asociados (nested)', () => {
+  it('parses offer values (nested)', () => {
     // Arrange
     const mock: DLContent = {
       dd: [
@@ -82,7 +82,7 @@ describe('valor ofertas specs', () => {
     expect(resultado).toStrictEqual(resultadoEsperado);
   });
 
-  it('retorna los valores de las ofertas con los valores asociados (no nested)', () => {
+  it('parses offer values (nested)', () => {
     // Arrange
     const mock: DLContent = {
       dd: [

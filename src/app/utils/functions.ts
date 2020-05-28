@@ -1,12 +1,12 @@
 import { DD, DLContent, DLContainer } from '../mocks';
 import { isArray } from 'util';
-import { IndicesStorage } from '../models/utils.models';
+import { indexesStorage } from '../models/utils.models';
 
 export const extractorIndices = (
   collection: string[],
   values: string[]
-): IndicesStorage[] => {
-  let indices: IndicesStorage[] = [];
+): indexesStorage[] => {
+  let indices: indexesStorage[] = [];
   let charsToRemove = /[\.\d\):]/g;
 
   if (!collection || !values) {
@@ -53,14 +53,14 @@ export const normalizeString = (str: string, simbolos: RegExp) => {
 };
 
 export const indexStorageReducer = (
-  collection: IndicesStorage[],
+  collection: indexesStorage[],
   index: number
 ): number => {
   if (!collection || index < 0) {
     return -1;
   }
 
-  return collection.reduce((acc: number, curr: IndicesStorage) => {
+  return collection.reduce((acc: number, curr: indexesStorage) => {
     if (acc != -1) {
       return acc;
     }
@@ -131,7 +131,7 @@ export const direccionBuilder = (
 // in order to place empty strings in the DLContent where we have -1 in the IndexStorage
 export const adjustIndex = (
   { dd, dt }: DLContent,
-  indices: IndicesStorage[]
+  indices: indexesStorage[]
 ): DLContent => {
   let localContent: DLContent = {
     dt: [],

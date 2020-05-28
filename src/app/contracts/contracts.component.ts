@@ -36,7 +36,7 @@ export class ContractsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initMetatags();
 
-    if (!this.isBrowser) {
+    if (this.isBrowser) {
       let today = this.getDateFormat();
 
       this.loadingSubscription = this.boeService

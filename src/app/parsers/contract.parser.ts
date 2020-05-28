@@ -4,6 +4,8 @@ import {
   Contract,
   emptyContract,
 } from '../contracts/components/contract/contract.model';
+import { Content } from '../contracts/components/contract/content.model';
+import { Metadata } from '../contracts/components/contract/metadata.model';
 
 export const contractParser = (contractApiModel: any): Contract => {
   let emptyDoc: Contract = emptyContract();
@@ -24,10 +26,12 @@ export const contractParser = (contractApiModel: any): Contract => {
       console.warn('malformed content', err);
     }
     let metadata = contractApiModel.documento.metadatos[0];
+    let parsedContent: Content = contentParser(content);
+    let parsedMetadata: Metadata = metadataParser(metadata);
 
     return {
-      content: contentParser(content),
-      metadata: metadataParser(metadata),
+      content: parsedContent,
+      metadata: parsedMetadata,
     };
   }
 

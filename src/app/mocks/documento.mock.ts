@@ -2,7 +2,7 @@ import { metadatosMock } from './metadatos.mock';
 import { contenidoMock } from './contenido.mock';
 
 export const ContractMock: any = {
-  Contract: {
+  documento: {
     texto: [
       {
         dl: contenidoMock,

@@ -1,0 +1,21 @@
+<div class="contracts-list" *ngIf="!isLoading; else asLoading">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="start stretch"
+    fxLayoutGap="1em"
+    *ngIf="contractsCollection.length; else noContent"
+  >
+    <app-contract
+      *ngFor="let contract of contractsCollection"
+      [contract]="contract"
+    ></app-contract>
+  </div>
+</div>
+
+<ng-template #noContent>
+  <app-no-content-card></app-no-content-card>
+</ng-template>
+
+<ng-template #asLoading>
+  <app-loading-overlay></app-loading-overlay>
+</ng-template>

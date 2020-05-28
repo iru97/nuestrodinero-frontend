@@ -1,0 +1,48 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      {{ contract.content.contractingAuthority.name }}
+
+      <mat-divider [vertical]="true"></mat-divider>
+
+      <span class="error-text">{{
+        contract.content.offerValues | totalCost | currency: 'EUR':'symbol':'.2-2'
+      }}</span>
+    </mat-card-title>
+    <mat-card-subtitle
+      testId="porcentaje"
+      [ngClass]="{
+        'success-text': porcentaje >= 60,
+        'error-text': porcentaje < 60
+      }"
+    >
+      {{ porcentaje }} % de información
+    </mat-card-subtitle>
+  </mat-card-header>
+  <!-- Contenido -->
+  <mat-card-content fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch">
+    <!-- Adjudicador -->
+    <app-contracting-authority
+      [contractingAuthority]="contract.content.contractingAuthority"
+    ></app-contracting-authority>
+
+    <!-- Descripciones y detalles -->
+    <app-description
+      [descriptions]="contract.content.sellingDescription"
+      [details]="contract.content.details"
+    ></app-description>
+
+    <!-- Adjudicatarios y ofertas -->
+    <app-sellers-offers
+      [sellers]="contract.content.sellers"
+      [offerValues]="contract.content.offerValues"
+      [offersReceived]="contract.content.offersReceived"
+    ></app-sellers-offers>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="viewPdf()">
+      Ver PDF
+    </button>
+  </mat-card-actions>
+</mat-card>

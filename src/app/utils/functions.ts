@@ -1,13 +1,12 @@
-import { IndicesStorage, Documento } from "../models";
-import { DD, DLContent, DLContainer } from "../mocks";
-import { documentoParser } from "../parsers/documento.parser";
-import { isArray } from "util";
+import { DD, DLContent, DLContainer } from '../mocks';
+import { isArray } from 'util';
+import { indexesStorage } from '../models/utils.models';
 
 export const extractorIndices = (
   collection: string[],
   values: string[]
-): IndicesStorage[] => {
-  let indices: IndicesStorage[] = [];
+): indexesStorage[] => {
+  let indices: indexesStorage[] = [];
   let charsToRemove = /[\.\d\):]/g;
 
   if (!collection || !values) {
@@ -48,20 +47,20 @@ export const extractorIndices = (
 };
 
 export const normalizeString = (str: string, simbolos: RegExp) => {
-  let substr = str.replace(simbolos, "");
+  let substr = str.replace(simbolos, '');
 
   return substr.trim();
 };
 
 export const indexStorageReducer = (
-  collection: IndicesStorage[],
+  collection: indexesStorage[],
   index: number
 ): number => {
   if (!collection || index < 0) {
     return -1;
   }
 
-  return collection.reduce((acc: number, curr: IndicesStorage) => {
+  return collection.reduce((acc: number, curr: indexesStorage) => {
     if (acc != -1) {
       return acc;
     }
@@ -71,14 +70,14 @@ export const indexStorageReducer = (
 
 export const getValorSeguro = (collection: DD, indice: number): string => {
   if (!collection || indice < 0) {
-    return "";
+    return '';
   }
 
-  return (collection[indice] as string) ?? "";
+  return (collection[indice] as string) ?? '';
 };
 
 export const replaceCommaWithDots = (str: string): number =>
-  str ? +str.replace(",", ".") : 0;
+  str ? +str.replace(',', '.') : 0;
 
 export const doRecursion = <T>(
   contenido: DLContent,
@@ -89,7 +88,7 @@ export const doRecursion = <T>(
   if (
     contenido.dt &&
     contenido.dt.length &&
-    typeof contenido.dd[0] === "string"
+    typeof contenido.dd[0] === 'string'
   ) {
     total.push(itemCreator(contenido));
     return total;
@@ -108,7 +107,7 @@ export const direccionBuilder = (
   content: DLContent
 ): string => {
   if (!collection || !collection.length) {
-    return "";
+    return '';
   }
 
   let [
@@ -132,7 +131,7 @@ export const direccionBuilder = (
 // in order to place empty strings in the DLContent where we have -1 in the IndexStorage
 export const adjustIndex = (
   { dd, dt }: DLContent,
-  indices: IndicesStorage[]
+  indices: indexesStorage[]
 ): DLContent => {
   let localContent: DLContent = {
     dt: [],
@@ -148,8 +147,8 @@ export const adjustIndex = (
       localContent.dd.push(dd.shift());
       localContent.dt.push(dt.shift());
     } else {
-      localContent.dd.push("");
-      localContent.dt.push("");
+      localContent.dd.push('');
+      localContent.dt.push('');
     }
   });
 
@@ -188,5 +187,5 @@ export const numberOfFieldsWithValue = (
 };
 
 function isObject(o) {
-  return typeof o === "object";
+  return typeof o === 'object';
 }

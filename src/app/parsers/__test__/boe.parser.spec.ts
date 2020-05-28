@@ -1,6 +1,6 @@
-import { BOE, defaultBOEVacio } from '../../models';
 import { boeParser } from '../boe.parser';
 import { boeMock, BoeAPiModel } from '../../mocks/boe.mock';
+import { BOE, defaultBOEVacio } from 'src/app/models/boe.model';
 
 describe('boe model spec', () => {
   it('should return a boe with empty array of id if arguments are undefined', () => {

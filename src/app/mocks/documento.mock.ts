@@ -1,7 +1,7 @@
-import { metadatosMock } from "./metadatos.mock";
-import { contenidoMock } from "./contenido.mock";
+import { metadatosMock } from './metadatos.mock';
+import { contenidoMock } from './contenido.mock';
 
-export const documentoMock: any = {
+export const ContractMock: any = {
   documento: {
     texto: [
       {

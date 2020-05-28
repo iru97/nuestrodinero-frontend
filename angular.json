@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "nuestro-dinero": {
+    "nuestrodinero-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/nuestro-dinero/browser",
+            "outputPath": "dist/nuestrodinero-frontend/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -64,18 +64,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "nuestro-dinero:build"
+            "browserTarget": "nuestrodinero-frontend:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "nuestro-dinero:build:production"
+              "browserTarget": "nuestrodinero-frontend:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "nuestro-dinero:build"
+            "browserTarget": "nuestrodinero-frontend:build"
           }
         },
         "test": {
@@ -108,18 +108,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "nuestro-dinero:serve"
+            "devServerTarget": "nuestrodinero-frontend:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "nuestro-dinero:serve:production"
+              "devServerTarget": "nuestrodinero-frontend:serve:production"
             }
           }
         },
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/nuestro-dinero/server",
+            "outputPath": "dist/nuestrodinero-frontend/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json"
           },
@@ -140,22 +140,22 @@
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
           "options": {
-            "browserTarget": "nuestro-dinero:build",
-            "serverTarget": "nuestro-dinero:server"
+            "browserTarget": "nuestrodinero-frontend:build",
+            "serverTarget": "nuestrodinero-frontend:server"
           },
           "configurations": {
             "production": {
-              "browserTarget": "nuestro-dinero:build:production",
-              "serverTarget": "nuestro-dinero:server:production"
+              "browserTarget": "nuestrodinero-frontend:build:production",
+              "serverTarget": "nuestrodinero-frontend:server:production"
             }
           }
         },
         "prerender": {
           "builder": "@nguniversal/builders:prerender",
           "options": {
-            "browserTarget": "nuestro-dinero:build:production",
-            "serverTarget": "nuestro-dinero:server:production",
-            "routes": ["/"]
+            "browserTarget": "nuestrodinero-frontend:build:production",
+            "serverTarget": "nuestrodinero-frontend:server:production",
+            "routes": ["/", "/contratos"]
           },
           "configurations": {
             "production": {
@@ -172,5 +172,5 @@
       }
     }
   },
-  "defaultProject": "nuestro-dinero"
+  "defaultProject": "nuestrodinero-frontend"
 }

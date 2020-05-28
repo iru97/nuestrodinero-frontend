@@ -1,6 +1,3 @@
-[![codecov](https://codecov.io/gh/franjpr/nuestro-dinero/branch/master/graph/badge.svg?token=m5ZdzLt4TG)](https://codecov.io/gh/franjpr/nuestro-dinero)
-
-
 # NuestroDinero
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.

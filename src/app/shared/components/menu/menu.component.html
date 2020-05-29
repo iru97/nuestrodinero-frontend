@@ -1,0 +1,12 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>menu</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="navigate('/contratos')">
+    <span>Contratos</span>
+  </button>
+  <button mat-menu-item (click)="navigate('/estadisticas')">
+    <span>Estadisticas</span>
+  </button>
+</mat-menu>

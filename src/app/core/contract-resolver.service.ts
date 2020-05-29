@@ -10,44 +10,75 @@ import { BoeService } from './boe.service';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { map, tap } from 'rxjs/operators';
 import { Contract } from '../contracts/components/contract/contract.model';
-import { isPlatformServer } from '@angular/common';
+import { isPlatformServer, isPlatformBrowser } from '@angular/common';
+import { AppStoreService } from './app-store.service';
+import { formatDate } from '../utils';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ContractResolverService implements Resolve<Contract[]> {
+export class ContractResolverService implements Resolve<AppState> {
   constructor(
     private boeService: BoeService,
     @Inject(PLATFORM_ID) private platformId,
-    private transferState: TransferState
+    private transferState: TransferState,
+    private appStore: AppStoreService
   ) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<Contract[]> {
-    let formattedDate = this.boeService.setDateFormat(new Date());
-    const datakey = makeStateKey(formattedDate);
+  ): Observable<AppState> {
+    return this.appStore.isTransferStateBlocked()
+      ? of(this.appStore.getState())
+      : this.getAppStateFromTransferState();
+  }
 
-    if (this.transferState.hasKey(datakey)) {
-      const contractCollection = this.transferState.get<Contract[]>(
-        datakey,
-        null
-      );
+  // Retrieves the data from the transfer state service
+  private getAppStateFromTransferState(): Observable<AppState> {
+    const stateTransferKey = makeStateKey(formatDate(new Date()));
 
-      this.transferState.remove(datakey);
-
-      return of(contractCollection);
+    if (this.transferState.hasKey(stateTransferKey)) {
+      return this.getAndClearFromTransferState(stateTransferKey);
     } else {
-      let today = new Date();
-
-      return this.boeService.getAds(today).pipe(
-        tap((contractCollection) => {
-          if (isPlatformServer(this.platformId)) {
-            this.transferState.set(datakey, contractCollection);
-          }
-        })
-      );
+      // 1st time as SSR
+      return this.saveAppStateToTransferState(stateTransferKey);
     }
+  }
+
+  // This runs only in SPA once, retrieves the data stored in the transferState service and then clears it
+  // Also blockTransferState to prevent further calls in the future
+  private getAndClearFromTransferState(stateTransferKey): Observable<AppState> {
+    const appTransferState = this.transferState.get<AppState>(
+      stateTransferKey,
+      null
+    );
+    this.transferState.remove(stateTransferKey);
+    this.appStore.setState(appTransferState);
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.appStore.blockTransferState();
+    }
+
+    return of(appTransferState);
+  }
+
+  // This runs only in SSR, and stores the data retrieved from the service in the transferState service
+  private saveAppStateToTransferState(stateTransferKey): Observable<AppState> {
+    const today = new Date();
+
+    return this.boeService.getAds(today).pipe(
+      map<Contract[], AppState>((contractCollection) => {
+        return {
+          dateStart: formatDate(today),
+          contractCollection,
+        };
+      }),
+      tap((appTransferState) => {
+        if (isPlatformServer(this.platformId)) {
+          this.transferState.set(stateTransferKey, appTransferState);
+        }
+      })
+    );
   }
 }

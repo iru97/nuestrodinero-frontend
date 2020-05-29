@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Contract } from '../contracts/components/contract/contract.model';
+import { formatDate } from '../utils';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class BoeService {
   constructor(private http: HttpClient) {}
 
   getAds(date: Date): Observable<Contract[]> {
-    let formattedDate = this.setDateFormat(date);
+    let formattedDate = formatDate(date);
     return this.http
       .get<Contract[]>(`${this.url}/api/boe?id=BOE-S-${formattedDate}`)
       .pipe(catchError(this.adErrHandler));
@@ -24,13 +25,5 @@ export class BoeService {
     console.warn('BoeService warning -> ', err);
 
     return of([]);
-  }
-
-  setDateFormat(date: Date): string {
-    let isoDateTime: string = date.toISOString();
-    let tIndex: number = isoDateTime.indexOf('T');
-    let isoDate: string = isoDateTime.substring(0, tIndex);
-
-    return isoDate.replace(/-/g, '');
   }
 }

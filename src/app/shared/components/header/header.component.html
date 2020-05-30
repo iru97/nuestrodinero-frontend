@@ -1,8 +1,13 @@
-<mat-toolbar fxLayout="column" fxLayoutAlign="start stretch" color="primary">
-  <span fxLayoutAlign="center center">
-    BOE del {{ today | date: "EEEE, dd/MM/yyyy" }}
-  </span>
-  <span fxLayoutAlign="center center" class="mat-small">
-    Formalizaciones de contratos.
-  </span>
+<mat-toolbar fxLayout="row" fxLayoutAlign="stretch center" color="primary">
+  <div fxFlex="5">
+    <app-menu></app-menu>
+  </div>
+  <div fxFlex fxLayout="column" fxLayoutAlign="start stretch">
+    <span fxLayoutAlign="center center">
+      BOE del {{ today | date: 'EEEE, dd/MM/yyyy' }}
+    </span>
+    <span fxLayoutAlign="center center" class="mat-small">
+      Formalizaciones de contratos.
+    </span>
+  </div>
 </mat-toolbar>

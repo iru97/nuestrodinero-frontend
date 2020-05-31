@@ -1,5 +1,5 @@
 import { Contract } from 'src/app/contracts/components/contract/contract.model';
-import { Stats, SellerOffer, PymeStats } from './stats.model';
+import { SellerOffer, PymeStats } from './stats.model';
 
 // Keep in mind that sellers, offerValues & offersReceived have the same length
 // and they keep an index relation.

@@ -52,6 +52,16 @@ export const normalizeString = (str: string, simbolos: RegExp) => {
   return substr.trim();
 };
 
+export const normalizeStringReplacement = (
+  str: string,
+  simbolos: RegExp,
+  replacement: string
+) => {
+  let substr = str.replace(simbolos, replacement);
+
+  return substr.trim();
+};
+
 export const indexStorageReducer = (
   collection: indexesStorage[],
   index: number

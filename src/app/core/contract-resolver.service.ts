@@ -13,6 +13,7 @@ import { Contract } from '../contracts/components/contract/contract.model';
 import { isPlatformServer, isPlatformBrowser } from '@angular/common';
 import { AppStoreService } from './app-store.service';
 import { formatDate } from '../utils';
+import { contractCollectionMock2 } from '../mocks/contract-collection.mock';
 
 @Injectable({
   providedIn: 'root',
@@ -29,9 +30,14 @@ export class ContractResolverService implements Resolve<AppState> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<AppState> {
-    return this.appStore.isTransferStateBlocked()
-      ? of(this.appStore.getState())
-      : this.getAppStateFromTransferState();
+    let appState: AppState = {
+      contractCollection: contractCollectionMock2,
+      dateStart: '',
+    };
+    return of(appState);
+    // return this.appStore.isTransferStateBlocked()
+    //   ? of(this.appStore.getState())
+    //   : this.getAppStateFromTransferState();
   }
 
   // Retrieves the data from the transfer state service

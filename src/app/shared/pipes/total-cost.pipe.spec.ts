@@ -1,5 +1,5 @@
 import { TotalCostPipe } from './total-cost.pipe';
-import { OfferValues } from '../components/sellers-offers/offerValues.model';
+import { OfferValues } from '../../contracts/components/sellers-offers/offerValues.model';
 
 describe('ReduceCollectionPipe', () => {
   it('create an instance', () => {

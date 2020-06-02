@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { OfferValues } from '../components/sellers-offers/offerValues.model';
+import { OfferValues } from '../../contracts/components/sellers-offers/offerValues.model';
 import memo from 'memo-decorator';
 
 @Pipe({

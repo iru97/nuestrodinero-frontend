@@ -26,6 +26,11 @@ export const PYME = 'El adjudicatario es una PYME';
 // REGEXP
 export const enumeracionDeListasRegexp: RegExp = /([\d\.]+(?=\))|[:\)])/g;
 export const dotsCharsAndSpacesRegexp: RegExp = /[[\.a-z\s]+/g;
+// CHARTS
+export enum CHART_TYPES {
+  ACTIVITY = 'Gasto público por actividad',
+  PYMES = 'Gasto público en PYMES',
+}
 
 // COLOR PALLETE
 export const COLOR_PALLETE: string[] = [

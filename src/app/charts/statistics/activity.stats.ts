@@ -1,6 +1,6 @@
 import { Contract } from 'src/app/contracts/components/contract/contract.model';
 import { Stats, ContractingAuthoritiesSpent } from './stats.model';
-import { TotalCostPipe } from 'src/app/contracts/pipes/total-cost.pipe';
+import { TotalCostPipe } from 'src/app/shared/pipes/total-cost.pipe';
 import * as _ from 'underscore';
 import { normalizeStringReplacement } from 'src/app/utils';
 

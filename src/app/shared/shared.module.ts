@@ -7,10 +7,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MenuComponent } from './components/menu/menu.component';
+import { TotalCostPipe } from './pipes/total-cost.pipe';
 
 const SHARED_MODULES = [
   CommonModule,
@@ -23,11 +25,13 @@ const SHARED_MODULES = [
   MatIconModule,
   MatProgressSpinnerModule,
   MatMenuModule,
+  MatFormFieldModule,
+  MatSelectModule,
 ];
 
 @NgModule({
-  declarations: [...SHARED_COMPONENTS, MenuComponent],
+  declarations: [...SHARED_COMPONENTS, TotalCostPipe],
   imports: [...SHARED_MODULES],
-  exports: [...SHARED_COMPONENTS, ...SHARED_MODULES],
+  exports: [...SHARED_COMPONENTS, ...SHARED_MODULES, TotalCostPipe],
 })
 export class SharedModule {}

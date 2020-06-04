@@ -1,6 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
+/functions/dist/**
 /dist
 /tmp
 /out-tsc
@@ -8,6 +9,7 @@
 /bazel-out
 
 # dependencies
+/functions/node_modules
 /node_modules
 /data-examples
 

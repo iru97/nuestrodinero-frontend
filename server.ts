@@ -18,72 +18,89 @@ import { contractParser } from 'src/app/parsers/contract.parser';
 import { BoeAPiModel } from 'src/app/mocks/boe.mock';
 
 /////////////////////////////
-let baseUrl = `${environment.boeBaseUrl}${environment.boeApi}`;
+// let baseUrl = `${environment.boeBaseUrl}${environment.boeApi}`;
 
-// Customized Code
-const createAjaxConfig = (url: string): AjaxRequest => {
-  return {
-    createXHR: () => new XMLHttpRequest(),
-    url,
-    method: 'GET',
-    crossDomain: true,
-    responseType: 'text',
-  };
-};
+// // Customized Code
+// const createAjaxConfig = (url: string): AjaxRequest => {
+//   return {
+//     createXHR: () => new XMLHttpRequest(),
+//     url,
+//     method: 'GET',
+//     crossDomain: true,
+//     responseType: 'text',
+//   };
+// };
 
-const mapBoeToContractObservablesCollection$ = ({
-  idAnuncio,
-}: BOE): Observable<Contract>[] => {
-  let observablesCollection: Observable<Contract>[] = idAnuncio.map(
-    (id: string) => {
-      return getContract(`${baseUrl}?id=${id}`);
-    }
-  );
+// const mapBoeToContractObservablesCollection$ = ({
+//   idAnuncio,
+// }: BOE): Observable<Contract>[] => {
+//   let observablesCollection: Observable<Contract>[] = idAnuncio.map(
+//     (id: string) => {
+//       return getContract(`${baseUrl}?id=${id}`);
+//     }
+//   );
 
-  return observablesCollection;
-};
+//   return observablesCollection;
+// };
 
-const getContract = (url): Observable<Contract> => {
-  return ajax(createAjaxConfig(url)).pipe(
-    pluck('response'),
-    concatMap<string, Promise<any>>((value) => parseStringPromise(value)),
-    map<any, Contract>(contractParser)
-  );
-};
+// const getContract = (url): Observable<Contract> => {
+//   return ajax(createAjaxConfig(url)).pipe(
+//     pluck('response'),
+//     concatMap<string, Promise<any>>((value) => parseStringPromise(value)),
+//     map<any, Contract>(contractParser)
+//   );
+// };
 
-const getContractCollection$ = (url: string): Observable<Contract[]> => {
-  return ajax(createAjaxConfig(`${url}`)).pipe(
-    pluck('response'),
-    concatMap<string, Promise<BoeAPiModel>>((value) =>
-      parseStringPromise(value)
-    ),
-    map<BoeAPiModel, BOE>(boeParser),
-    map<BOE, Observable<Contract>[]>(mapBoeToContractObservablesCollection$),
-    switchMap<Observable<Contract>[], Observable<Contract[]>>((r) => {
-      return r.length ? forkJoin(r) : of([]);
-    })
-  );
-};
+// const getContractCollection$ = (url: string): Observable<Contract[]> => {
+//   return ajax(createAjaxConfig(`${url}`)).pipe(
+//     pluck('response'),
+//     concatMap<string, Promise<BoeAPiModel>>((value) =>
+//       parseStringPromise(value)
+//     ),
+//     map<BoeAPiModel, BOE>(boeParser),
+//     map<BOE, Observable<Contract>[]>(mapBoeToContractObservablesCollection$),
+//     switchMap<Observable<Contract>[], Observable<Contract[]>>((r) => {
+//       return r.length ? forkJoin(r) : of([]);
+//     })
+//   );
+// };
 
-const buildObserver = (res): PartialObserver<Contract[]> => ({
-  next: (documentoCollection) => {
-    console.log(
-      `Succesfully retrieved ${documentoCollection.length} documents`
-    );
-    res.status(200).send(documentoCollection);
-  },
-  error: (err) => {
-    console.warn('Error', err);
-    res.status(err.status).send(err.error);
-  },
-});
+// const buildObserver = (res): PartialObserver<Contract[]> => ({
+//   next: (documentoCollection) => {
+//     console.log(
+//       `Succesfully retrieved ${documentoCollection.length} documents`
+//     );
+//     res.status(200).send(documentoCollection);
+//   },
+//   error: (err) => {
+//     console.warn('Error', err);
+//     res.status(err.status).send(err.error);
+//   },
+// });
 
 /////////////////////////////
 
-// The Express app is exported so that it can be used by serverless Functions.
+//The Express app is exported so that it can be used by serverless Functions.
+
+// Example Express Rest API endpoints
+// server.get('/api/boe', async (req, res) => {
+//   let boeId = req.query.id;
+//   let query = boeId ? `?id=${boeId}` : '';
+
+//   const contractCollection$: Observable<Contract[]> = getContractCollection$(
+//     `${baseUrl}${query}`
+//   );
+
+//   const observer: PartialObserver<Contract[]> = buildObserver(res);
+
+//   contractCollection$.subscribe(observer);
+// });
+
 export function app() {
   const server = express();
   const distFolder = join(process.cwd(), 'dist/nuestrodinero-frontend/browser');
+  console.log('distFolder', distFolder);
+
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
     ? 'index.original.html'
     : 'index';
@@ -98,20 +115,6 @@ export function app() {
 
   server.set('view engine', 'html');
   server.set('views', distFolder);
-
-  // Example Express Rest API endpoints
-  server.get('/api/boe', async (req, res) => {
-    let boeId = req.query.id;
-    let query = boeId ? `?id=${boeId}` : '';
-
-    const contractCollection$: Observable<Contract[]> = getContractCollection$(
-      `${baseUrl}${query}`
-    );
-
-    const observer: PartialObserver<Contract[]> = buildObserver(res);
-
-    contractCollection$.subscribe(observer);
-  });
 
   // Serve static files from /browser
   server.get(
@@ -145,11 +148,11 @@ function run() {
 // Webpack will replace 'require' with '__webpack_require__'
 // '__non_webpack_require__' is a proxy to Node 'require'
 // The below code is to ensure that the server is run only when not requiring the bundle.
-declare const __non_webpack_require__: NodeRequire;
-const mainModule = __non_webpack_require__.main;
-const moduleFilename = (mainModule && mainModule.filename) || '';
-if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
-  run();
-}
+// declare const __non_webpack_require__: NodeRequire;
+// const mainModule = __non_webpack_require__.main;
+// const moduleFilename = (mainModule && mainModule.filename) || '';
+// if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
+//   run();
+// }
 
 export * from './src/main.server';

@@ -9,6 +9,7 @@
 /bazel-out
 
 # dependencies
+/functions/node_modules
 /node_modules
 /data-examples
 

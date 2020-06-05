@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path: 'estadisticas',
     loadChildren: () =>
-      import('./graphics/graphics.module').then((m) => m.GraphicsModule),
+      import('./charts/charts.module').then((m) => m.ChartsModule),
     resolve: {
       estadisticas: ContractResolverService,
     },

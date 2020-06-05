@@ -1,6 +1,7 @@
 import { DD, DLContent, DLContainer } from '../mocks';
 import { isArray } from 'util';
 import { indexesStorage } from '../models/utils.models';
+import { CHART_TYPES } from '../core/const.api.model';
 
 export const extractorIndices = (
   collection: string[],
@@ -48,6 +49,16 @@ export const extractorIndices = (
 
 export const normalizeString = (str: string, simbolos: RegExp) => {
   let substr = str.replace(simbolos, '');
+
+  return substr.trim();
+};
+
+export const normalizeStringReplacement = (
+  str: string,
+  simbolos: RegExp,
+  replacement: string
+) => {
+  let substr = str.replace(simbolos, replacement);
 
   return substr.trim();
 };
@@ -196,4 +207,14 @@ export const formatDate = (date: Date): string => {
   let isoDate: string = isoDateTime.substring(0, tIndex);
 
   return isoDate.replace(/-/g, '');
+};
+
+export const chartTypesToArray = (): string[] => {
+  let arr = [];
+
+  for (let key in CHART_TYPES) {
+    arr.push(CHART_TYPES[key]);
+  }
+
+  return arr;
 };

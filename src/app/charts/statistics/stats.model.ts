@@ -7,7 +7,6 @@ export interface Stats {
   value: number;
 }
 
-export type PymeStats = Stats & { numberOfCompanies: number };
 export type ContractingAuthoritiesSpent = ContractingAuthority & {
   totalSpent: number;
 };

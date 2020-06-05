@@ -1,11 +1,11 @@
 import { Contract } from 'src/app/contracts/components/contract/contract.model';
-import { SellerOffer, PymeStats } from './stats.model';
+import { SellerOffer, Stats } from './stats.model';
 
 // Keep in mind that sellers, offerValues & offersReceived have the same length
 // and they keep an index relation.
 
 // Return stats with the total money spent on pymes and non-pymes
-export const pymeStats = (contractCollection: Contract[]): PymeStats[] => {
+export const pymeStats = (contractCollection: Contract[]): Stats[] => {
   const allSellers = getSellerWithOffers(contractCollection);
 
   const pymesCost = allSellers.reduce(
@@ -18,15 +18,16 @@ export const pymeStats = (contractCollection: Contract[]): PymeStats[] => {
     0
   );
 
-  let pymes: PymeStats = {
-    numberOfCompanies: allSellers.filter((s) => s.pyme).length,
-    label: 'PYMES',
+  let numberPymesOfCompanies = allSellers.filter((s) => s.pyme).length;
+  let numberNoPymesOfCompanies = allSellers.filter((s) => !s.pyme).length;
+
+  let pymes: Stats = {
+    label: `${numberPymesOfCompanies} PYMES`,
     value: pymesCost,
   };
 
-  let nonPymes: PymeStats = {
-    numberOfCompanies: allSellers.filter((s) => !s.pyme).length,
-    label: 'NO PYMES',
+  let nonPymes: Stats = {
+    label: `${numberNoPymesOfCompanies} NO PYMES`,
     value: nonPymesCost,
   };
 

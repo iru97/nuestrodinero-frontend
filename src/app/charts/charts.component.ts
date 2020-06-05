@@ -1,6 +1,12 @@
-import * as d3 from 'd3';
 import * as _ from 'underscore';
-import { legendColor } from 'd3-svg-legend';
+import {
+  Chart,
+  ChartData,
+  ChartOptions,
+  ChartConfiguration,
+  ChartTooltipItem,
+  PositionType,
+} from 'chart.js';
 import { AppState } from '../core/app.state';
 import { chartTypesToArray } from '../utils';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +16,6 @@ import { pymeStats } from './statistics/pymes.stats';
 import { MatSelectChange } from '@angular/material/select';
 import { activityStats } from './statistics/activity.stats';
 import { isPlatformBrowser, CurrencyPipe } from '@angular/common';
-import { Contract } from '../contracts/components/contract/contract.model';
 import { OfferValues } from '../contracts/components/sellers-offers/offerValues.model';
 import {
   Component,
@@ -31,13 +36,16 @@ export class ChartsComponent implements OnInit, AfterViewInit {
   @ViewChild('chartContainer') chartContainer: ElementRef;
   chartOptions: string[] = chartTypesToArray();
   offerValues: OfferValues[] = [];
-  contractCollection: Contract[] = [];
-  chartData: Stats[] = [];
+  pieOptions: any = this.initOptions();
+  appState: AppState;
   isBrowser = false;
 
-  private radius;
-  private margin;
-  private svgDimension = { width: 0, height: 0 };
+  //pieChart
+  stats: Stats[] = [];
+  chartjsInstance: Chart;
+  chartjsData: ChartData;
+  chartjsOptions: ChartOptions;
+  chartjsConfig: ChartConfiguration;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,190 +55,128 @@ export class ChartsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    let appState: AppState = this.activatedRoute.snapshot.data['estadisticas'];
+    this.appState = this.activatedRoute.snapshot.data['estadisticas'];
 
-    this.offerValues = appState.contractCollection.reduce(
+    this.offerValues = this.appState.contractCollection.reduce(
       (acc, curr) => acc.concat(curr.content.offerValues),
       []
     );
-
-    this.contractCollection = appState.contractCollection;
-    //this.chartData = _.sortBy(activityStats(this.contractCollection), 'value');
-    let pymeStatsa: Stats[] = pymeStats(this.contractCollection).map((p) => {
-      p.label = `${p.numberOfCompanies} ${p.label}`;
-      return {
-        label: p.label,
-        value: p.value,
-      };
-    });
-
-    this.chartData = _.sortBy(pymeStatsa, 'value');
   }
 
   ngAfterViewInit(): void {
     if (this.isBrowser) {
-      this.initSvgDimensions();
-      this.drawCharts();
+      this.initData();
+      this.initChartConfig();
+      this.drawChart();
     }
   }
 
   changeChartType({ value }: MatSelectChange): void {
+    let data: Stats[];
+
     switch (value) {
       case CHART_TYPES.ACTIVITY:
-        this.chartData = _.sortBy(
-          activityStats(this.contractCollection),
-          'value'
-        );
+        let actStat = activityStats(this.appState.contractCollection);
+        data = _.sortBy(actStat, 'value');
         break;
       case CHART_TYPES.PYMES:
-        let pymeStatsa: Stats[] = pymeStats(this.contractCollection).map(
-          (p) => {
-            p.label = `${p.numberOfCompanies} ${p.label}`;
-            return {
-              label: p.label,
-              value: p.value,
-            };
-          }
-        );
-
-        //this.chartData = _.sortBy(pymeStatsa, 'value');
-        console.log(
-          'ChartsComponent -> changeChartType -> this.chartData',
-          _.sortBy(pymeStatsa, 'value')
-        );
+        let pymeStat: Stats[] = pymeStats(this.appState.contractCollection);
+        data = _.sortBy(pymeStat, 'value');
         break;
     }
 
-    this.updateChart(this.chartData);
+    this.updateChart(data);
   }
 
-  private updateChart(data: Stats[]): void {
-    const arc = d3.arc().innerRadius(0).outerRadius(this.radius);
-    const pieChart = d3
-      .pie()
-      .value((d) => d['value'] as any)
-      .sort(null);
-
-    d3.selectAll('path')
-      .data(pieChart(<any>data))
-      .transition()
-      .duration(500)
-      .attr('d', <any>arc);
+  onResize(): void {
+    this.chartjsConfig.options.legend.position = this.getLegendPosition();
+    this.chartjsInstance.update();
   }
 
-  // also is called on window resize
-  initSvgDimensions(): void {
-    let htmlElement: HTMLDivElement = this.chartContainer.nativeElement;
-    this.svgDimension.width = htmlElement.getBoundingClientRect().width;
-
-    this.margin = {
-      left: 10,
-      right: 10,
-      top: 10,
-      bottom: 10,
+  private initChartConfig(): void {
+    this.chartjsData = {
+      labels: this.stats.map((x) => x.label),
+      datasets: [
+        {
+          backgroundColor: COLOR_PALLETE.slice(0, this.stats.length),
+          data: this.stats.map((x) => x.value),
+        },
+      ],
     };
 
-    this.radius = this.svgDimension.width / 3;
-    this.svgDimension.height = this.calculateSvgHeight();
+    this.chartjsOptions = {
+      maintainAspectRatio: false,
+      tooltips: {
+        callbacks: {
+          title: this.tooltipTitle.bind(this),
+          label: this.tooltipLabel.bind(this),
+        },
+      },
+      legend: {
+        align: 'start',
+        position: this.getLegendPosition(),
+      },
+    };
+
+    this.chartjsConfig = {
+      data: this.chartjsData,
+      options: this.chartjsOptions,
+      type: 'pie',
+    };
   }
 
-  private drawCharts(): void {
-    const colors = COLOR_PALLETE.slice(0, this.chartData.length);
-    const ordinalColorScale = this.createColorScate(this.chartData, colors);
-    const svgLayout = this.drawSvgLayout();
-    const pieChartGroup = this.drawPieChartLayout(svgLayout);
-    const arc = d3.arc().innerRadius(0).outerRadius(this.radius);
-
-    const pieChart = d3
-      .pie()
-      .value((d) => d['value'] as any)
-      .sort(null);
-
-    const pie = pieChart(<any>this.chartData);
-
-    pieChartGroup
-      .selectAll('slice')
-      .data(pie)
-      .enter()
-      .append('path')
-      .attr('fill', (d, i) => colors[i])
-      .attr('d', <any>arc); // Hack typing: https://stackoverflow.com/questions/35413072/compilation-errors-when-drawing-a-piechart-using-d3-js-typescript-and-angular/38021825
-
-    this.drawLegend(svgLayout, ordinalColorScale);
+  private tooltipLabel(tooltip: ChartTooltipItem, data: ChartData) {
+    let { index } = tooltip;
+    return data.labels[index];
   }
 
-  private drawSvgLayout() {
-    let layout = d3
-      .select('#chartContainer')
-      .append('svg')
-      .attr('width', '100%')
-      .attr('height', '100%')
-      .attr('preserveAspectRatio', 'xMinYMin meet')
-      .attr(
-        'viewBox',
-        `0 0 
-       ${this.svgDimension.width}
-       ${this.svgDimension.height}`
-      );
-
-    layout
-      .append('g')
-      .append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', this.svgDimension.width)
-      .attr('height', this.svgDimension.height)
-      .attr('style', 'fill: #FAFAFA');
-
-    return layout;
+  private tooltipTitle(tooltip: ChartTooltipItem[], data: ChartData) {
+    let { index } = tooltip[0];
+    let cost = data.datasets[0].data[index];
+    return new CurrencyPipe('es').transform(cost, 'EUR', 'symbol', '.2-2');
   }
 
-  private drawPieChartLayout(svgLayout) {
-    const pieMarginLeft = this.svgDimension.width / 2;
-    const pieMarginTop = this.radius + this.margin.top;
-    return svgLayout
-      .append('g')
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
-      .attr('width', this.svgDimension.width)
-      .attr('height', this.svgDimension.height)
-      .attr('transform', `translate(${pieMarginLeft}, ${pieMarginTop})`);
+  private drawChart(): void {
+    this.chartjsInstance = new Chart('chart', this.chartjsConfig);
   }
 
-  private drawLegend(svgLayout, ordinalColorScale): void {
-    var legendOrdinal = legendColor().scale(ordinalColorScale);
+  private initData(): void {
+    // by default load activity stats
+    let stats: Stats[] = activityStats(this.appState.contractCollection);
+    let sortedStats: Stats[] = _.sortBy(stats, 'value');
 
-    const legendLeft = 0;
-    const legendTop = this.margin.top * 2 + this.radius * 2;
-
-    const legendGroup = svgLayout
-      .append('g')
-      .attr('transform', `translate(${legendLeft},${legendTop})`)
-      .attr('style', 'font-size:10px');
-
-    legendGroup.call(legendOrdinal);
+    this.stats = [...sortedStats];
   }
 
-  private createColorScate(data, colors) {
-    const legendKeys: string[] = data.map((d) => {
-      let cost = new CurrencyPipe('es').transform(
-        d.value,
-        'EUR',
-        'symbol',
-        '.2-2'
-      );
-      return `${cost} | ${d.label}`;
-    });
+  private updateChart(data: Stats[]) {
+    this.chartjsData = {
+      labels: data.map((x) => x.label),
+      datasets: [
+        {
+          backgroundColor: COLOR_PALLETE.slice(0, data.length),
+          data: data.map((x) => x.value),
+        },
+      ],
+    };
 
-    return d3.scaleOrdinal().domain(legendKeys).range(colors);
+    this.chartjsConfig.data = this.chartjsData;
+
+    this.chartjsInstance.update();
   }
 
-  private calculateSvgHeight(): number {
-    // returns the height in pixels by adding
-    // piechart diameter + topmargin + 20px per each item in the pie
-    let LINE_HEIGHT = 20;
+  private initOptions(): any {
+    return {
+      legend: {
+        position: 'bottom',
+      },
+    };
+  }
 
-    return (
-      this.radius * 2 + this.margin.top + this.chartData.length * LINE_HEIGHT
-    );
+  private getLegendPosition(): PositionType {
+    if (window.screen.width <= 600) {
+      return 'top';
+    } else {
+      return 'left';
+    }
   }
 }

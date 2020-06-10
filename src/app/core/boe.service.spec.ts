@@ -25,7 +25,7 @@ describe('BoeService', () => {
     const ads$: Observable<Contract[]> = of([emptyContract()]);
 
     const callApiSpy = jest.spyOn(service, 'getAds').mockReturnValue(ads$);
-    service.getAds('20200520');
+    service.getAds(new Date());
 
     ads$.subscribe((document) => {
       expect(document).toHaveLength(1);

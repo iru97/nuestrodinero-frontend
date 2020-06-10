@@ -7,7 +7,7 @@ import {
   ChartTooltipItem,
   PositionType,
 } from 'chart.js';
-import { AppState } from '../core/app.state';
+import { AppState, defaultState } from '../core/app.state';
 import { chartTypesToArray } from '../utils';
 import { ActivatedRoute } from '@angular/router';
 import { Stats } from './statistics/stats.model';
@@ -56,7 +56,9 @@ export class ChartsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.appState = this.activatedRoute.snapshot.data['estadisticas'];
-
+    if (!this.appState) {
+      this.appState = defaultState();
+    }
     this.offerValues = this.appState.contractCollection.reduce(
       (acc, curr) => acc.concat(curr.content.offerValues),
       []

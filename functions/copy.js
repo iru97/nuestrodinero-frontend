@@ -13,7 +13,7 @@ if (!fs.existsSync(dest)) {
   fs.mkdirSync(dest);
 }
 
-rimraf(dest)
+rimraf.sync(dest);
 copyFolderSync(src, dest);
 
 function copyFolderSync(from, to) {

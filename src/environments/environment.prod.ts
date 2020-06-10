@@ -1,6 +1,4 @@
 export const environment = {
   production: true,
-  boeBaseUrl: "https://boe.es/",
-  boeApi: "diario_boe/xml.php",
-  serverUrl: "https://nuestrodinero.ew.r.appspot.com",
+  serverUrl: 'https://cr-backend-4p5l3t4piq-ew.a.run.app/api',
 };

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const rimraf = require('rimraf');
 var path = require("path");
 const src = '../dist/nuestrodinero-frontend';
 const dest = './dist/nuestrodinero-frontend';
@@ -12,7 +13,7 @@ if (!fs.existsSync(dest)) {
   fs.mkdirSync(dest);
 }
 
-fs.rmdirSync(dest, { recursive: true })
+rimraf(dest)
 copyFolderSync(src, dest);
 
 function copyFolderSync(from, to) {

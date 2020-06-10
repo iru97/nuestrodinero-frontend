@@ -20,4 +20,4 @@ steps:
   # Deploy functions & hosting 
   - name: "gcr.io/nuestrodinero/firebase"
     dir: 'functions'
-    args: ["run", "deploy"]
+    args: ["deploy","--project=nuestrodinero","--only=hosting,functions"]

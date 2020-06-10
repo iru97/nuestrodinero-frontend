@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, PartialObserver } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Contract } from './components/contract/contract.model';
 import { Title, Meta } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
-import { AppState } from '../core/app.state';
+import { AppState, defaultState } from '../core/app.state';
 
 @Component({
   selector: 'app-contracts',
@@ -25,6 +25,10 @@ export class ContractsComponent implements OnInit, OnDestroy {
     this.initMetatags();
 
     let appState: AppState = this.activatedRoute.snapshot.data['contratos'];
+
+    if (!appState) {
+      appState = defaultState();
+    }
 
     this.contractsCollection = appState.contractCollection;
   }

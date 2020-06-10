@@ -1,24 +1,24 @@
 import { pymeStats } from './pymes.stats';
+import { Stats } from './stats.model';
+import { activityStats } from './activity.stats';
 import {
   contractCollectionMock,
   contractCollectionMock2,
-} from 'src/app/mocks/contract-collection.mock';
-import { PymeStats, Stats } from './stats.model';
-import { activityStats } from './activity.stats';
+} from '../../../../mocks/contract-collection.mock';
 
 describe('stats specs', () => {
   it('should return stats from pymes & non-pymes', () => {
-    const expectedResult = [
-      { numberOfCompanies: 4, label: 'PYMES', value: 50080.88 },
-      { numberOfCompanies: 7, label: 'NO PYMES', value: 1550123.84 },
+    const expectedResult: Stats[] = [
+      { label: '4 PYMES', value: 50080.88 },
+      { label: '7 NO PYMES', value: 1550123.84 },
     ];
 
-    const givenResult: PymeStats[] = pymeStats(contractCollectionMock);
+    const givenResult: Stats[] = pymeStats(contractCollectionMock);
 
     expect(givenResult).toStrictEqual(expectedResult);
   });
 
-  it.only('should return stats from money spent by activities', () => {
+  it('should return stats from money spent by activities', () => {
     const expectedResult = [
       { label: 'Defensa', value: 155681.6 },
       { label: 'Administración Financiera y Tributaria', value: 92709 },

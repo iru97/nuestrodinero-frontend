@@ -6,6 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SellersOffersComponent } from './sellers-offers.component';
 import { LabelValueComponent } from '../../shared/label-value/label-value.component';
 import { Seller } from './sellers.model';
+import { YesNoPipe } from '../../pipes/yes-no.pipe';
 
 describe('AdjudicatariosOfertasComponent', () => {
   let component: SellersOffersComponent;
@@ -13,7 +14,7 @@ describe('AdjudicatariosOfertasComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SellersOffersComponent, LabelValueComponent],
+      declarations: [SellersOffersComponent, LabelValueComponent, YesNoPipe],
       imports: [MatDividerModule],
     }).compileComponents();
   }));

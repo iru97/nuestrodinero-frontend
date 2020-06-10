@@ -1,16 +1,10 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  Inject,
-  PLATFORM_ID,
-} from '@angular/core';
-import { Subscription, PartialObserver } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Contract } from './components/contract/contract.model';
-import { BoeService } from '../core';
 import { Title, Meta } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
-import { isPlatformBrowser } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { AppState, defaultState } from '../core/app.state';
 
 @Component({
   selector: 'app-contracts',
@@ -18,31 +12,25 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./contracts.component.scss'],
 })
 export class ContractsComponent implements OnInit, OnDestroy {
-  isLoading: boolean = true;
-  loadingSubscription: Subscription;
-  isLoadingObserver: PartialObserver<any[]>;
+  subscription: Subscription;
   contractsCollection: Contract[] = [];
-  isBrowser: boolean;
 
   constructor(
-    private boeService: BoeService,
+    private activatedRoute: ActivatedRoute,
     private title: Title,
-    private meta: Meta,
-    @Inject(PLATFORM_ID) platformId: any
-  ) {
-    this.isBrowser = isPlatformBrowser(platformId);
-  }
+    private meta: Meta
+  ) {}
 
   ngOnInit(): void {
     this.initMetatags();
 
-    if (this.isBrowser) {
-      let today = this.getDateFormat();
+    let appState: AppState = this.activatedRoute.snapshot.data['contratos'];
 
-      this.loadingSubscription = this.boeService
-        .getAds(today)
-        .subscribe(this.initObserver());
+    if (!appState) {
+      appState = defaultState();
     }
+
+    this.contractsCollection = appState.contractCollection;
   }
 
   initMetatags(): void {
@@ -72,30 +60,7 @@ export class ContractsComponent implements OnInit, OnDestroy {
     ]);
   }
 
-  initObserver(): PartialObserver<any[]> {
-    return {
-      next: this.handleNext.bind(this),
-      complete: this.handleOnComplete.bind(this),
-    };
-  }
-
-  handleNext(contracts: Contract[]): void {
-    this.contractsCollection = [...contracts];
-  }
-
-  handleOnComplete(): void {
-    this.isLoading = false;
-  }
-
-  getDateFormat(): string {
-    let isoDateTime: string = new Date().toISOString();
-    let tIndex: number = isoDateTime.indexOf('T');
-    let isoDate: string = isoDateTime.substring(0, tIndex);
-
-    return isoDate.replace(/-/g, '');
-  }
-
   ngOnDestroy(): void {
-    if (this.loadingSubscription) this.loadingSubscription.unsubscribe();
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

@@ -2,16 +2,18 @@ steps:
   # Install
   - name: "gcr.io/cloud-builders/npm"
     args: ["install"]
-
   # Tests
   - name: "gcr.io/cloud-builders/npm"
     args: ["run", "test"]
-    
   # Build
   - name: node:12.16.1
     entrypoint: "npm"
-    args: ["run", "prerender"]
-
-  # Deploy
-  - name: "gcr.io/cloud-builders/gcloud"
-    args: ["app", "deploy"]
+    args: ["run", "build:ssr"]
+  # install functions package.json 
+  - name: 'gcr.io/cloud-builders/npm'
+    dir: 'functions'
+    args: ['install']
+  # Deploy functions & hosting 
+  - name: "gcr.io/cloud-builders/npm"
+    dir: 'functions'
+    args: ["run", "deploy"]

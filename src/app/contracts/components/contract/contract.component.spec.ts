@@ -6,7 +6,7 @@ import { CONTRACTS_SHARED_COMPONENTS } from '../../shared';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { OfferValues } from '../sellers-offers/offerValues.model';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TotalCostPipe } from '../../pipes/total-cost.pipe';
+import { YesNoPipe } from '../../pipes/yes-no.pipe';
 
 describe('ContractComponent', () => {
   let component: ContractComponent;
@@ -17,7 +17,7 @@ describe('ContractComponent', () => {
       declarations: [
         ...CONTRACT_COMPONENTS,
         ...CONTRACTS_SHARED_COMPONENTS,
-        TotalCostPipe,
+        YesNoPipe,
       ],
       imports: [SharedModule],
     }).compileComponents();

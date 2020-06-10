@@ -1,0 +1,19 @@
+:host {
+  width: 100%;
+}
+
+.charts {
+  height: 100%;
+  background-color: beige;
+}
+
+#chartContainer {
+  margin: auto;
+  height: 80vh;
+  width: 90vw;
+  position: relative;
+}
+
+.max-width {
+  max-width: 65vw;
+}

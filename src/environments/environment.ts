@@ -4,9 +4,7 @@
 
 export const environment = {
   production: false,
-  boeBaseUrl: "https://boe.es/",
-  boeApi: "diario_boe/xml.php",
-  serverUrl: "http://localhost:4200",
+  serverUrl: 'http://localhost:8080/api',
 };
 
 /*

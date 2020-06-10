@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "public": "dist/nuestrodinero-frontend/browser",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "ssr"
+      }
+    ]
+  }
+}

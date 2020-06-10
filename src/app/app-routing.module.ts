@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ContractsComponent } from './contracts/contracts.component';
+import { ContractResolverService } from './core/contract-resolver.service';
 
 const routes: Routes = [
   {
@@ -12,6 +12,17 @@ const routes: Routes = [
     path: 'contratos',
     loadChildren: () =>
       import('./contracts/contracts.module').then((m) => m.ContractsModule),
+    resolve: {
+      contratos: ContractResolverService,
+    },
+  },
+  {
+    path: 'estadisticas',
+    loadChildren: () =>
+      import('./charts/charts.module').then((m) => m.ChartsModule),
+    resolve: {
+      estadisticas: ContractResolverService,
+    },
   },
 ];
 

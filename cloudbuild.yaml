@@ -3,8 +3,8 @@ steps:
   - name: "gcr.io/cloud-builders/npm"
     args: ["install"]
   # Tests
-  - name: "gcr.io/cloud-builders/npm"
-    args: ["run", "test"]
+  # - name: "gcr.io/cloud-builders/npm"
+  #   args: ["run", "test"]
   # Build
   - name: node:12.16.1
     entrypoint: "npm"
@@ -13,7 +13,11 @@ steps:
   - name: 'gcr.io/cloud-builders/npm'
     dir: 'functions'
     args: ['install']
-  # Deploy functions & hosting 
+  # Copy
   - name: "gcr.io/cloud-builders/npm"
+    dir: 'functions'
+    args: ["run", "copy"]
+  # Deploy functions & hosting 
+  - name: "gcr.io/nuestrodinero/firebase"
     dir: 'functions'
     args: ["run", "deploy"]

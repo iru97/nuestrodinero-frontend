@@ -3,10 +3,11 @@
   "description": "Cloud Functions for Firebase",
   "scripts": {
     "lint": "eslint .",
-    "serve": "node copy && firebase emulators:start --only functions,hosting",
+    "serve": "firebase emulators:start --only functions,hosting",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
-    "deploy": "node copy && firebase deploy --only functions,hosting",
+    "copy": "node copy ",
+    "deploy": "firebase deploy --only functions,hosting",
     "logs": "firebase functions:log"
   },
   "engines": {

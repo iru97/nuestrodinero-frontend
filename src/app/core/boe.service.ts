@@ -5,7 +5,6 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Contract } from '../contracts/components/contract/contract.model';
 import { formatDate } from '../utils';
-import { contractCollectionMock2 } from '../mocks/contract-collection.mock';
 
 @Injectable({
   providedIn: 'root',
@@ -17,11 +16,9 @@ export class BoeService {
 
   getAds(date: Date): Observable<Contract[]> {
     let formattedDate = formatDate(date);
-    // temporary until backend is online
-    return of(contractCollectionMock2);
-    // return this.http
-    //   .get<Contract[]>(`${this.url}/api/boe?id=BOE-S-${formattedDate}`)
-    //   .pipe(catchError(this.adErrHandler));
+    return this.http
+      .get<Contract[]>(`${this.url}/contracts?id=BOE-S-${formattedDate}`)
+      .pipe(catchError(this.adErrHandler));
   }
 
   adErrHandler(err): Observable<Contract[]> {

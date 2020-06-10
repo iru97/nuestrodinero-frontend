@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  serverUrl: 'https://cr-backend-4p5l3t4piq-ew.a.run.app/api',
+  serverUrl: 'http://localhost:8080/api',
 };
 
 /*

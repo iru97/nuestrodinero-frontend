@@ -13,7 +13,6 @@ import { Contract } from '../contracts/components/contract/contract.model';
 import { isPlatformServer, isPlatformBrowser } from '@angular/common';
 import { AppStoreService } from './app-store.service';
 import { formatDate } from '../utils';
-import { contractCollectionMock2 } from '../mocks/contract-collection.mock';
 
 @Injectable({
   providedIn: 'root',
@@ -30,14 +29,9 @@ export class ContractResolverService implements Resolve<AppState> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<AppState> {
-    let appState: AppState = {
-      contractCollection: contractCollectionMock2,
-      dateStart: '',
-    };
-    return of(appState);
-    // return this.appStore.isTransferStateBlocked()
-    //   ? of(this.appStore.getState())
-    //   : this.getAppStateFromTransferState();
+    return this.appStore.isTransferStateBlocked()
+      ? of(this.appStore.getState())
+      : this.getAppStateFromTransferState();
   }
 
   // Retrieves the data from the transfer state service
@@ -71,7 +65,7 @@ export class ContractResolverService implements Resolve<AppState> {
 
   // This runs only in SSR, and stores the data retrieved from the service in the transferState service
   private saveAppStateToTransferState(stateTransferKey): Observable<AppState> {
-    const today = new Date(2020, 4, 29);
+    const today = new Date();
 
     return this.boeService.getAds(today).pipe(
       map<Contract[], AppState>((contractCollection) => {

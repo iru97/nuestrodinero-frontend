@@ -40,6 +40,7 @@ describe('AdjudicatariosOfertasComponent', () => {
         name: 'name',
         address: 'addr',
         nif: '1234q',
+        pyme: false,
       },
     ];
 

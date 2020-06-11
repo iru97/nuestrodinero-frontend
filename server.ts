@@ -9,7 +9,6 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 export function app() {
   const server = express();
   const distFolder = join(process.cwd(), 'dist/nuestrodinero-frontend/browser');
-  console.log('distFolder', distFolder);
 
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
     ? 'index.original.html'

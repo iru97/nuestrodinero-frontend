@@ -22,6 +22,6 @@ steps:
     entrypoint: 'npm'
     args: ["run", "copy"]
   # Deploy functions & hosting 
-  - name: "gcr.io/nuestrodinero/firebase"
+  - name: "gcr.io/cloud-builders/npm"
     dir: 'functions'
-    args: ["deploy","--project=nuestrodinero","--only=hosting,functions"]
+    args: ["run","deploy"]

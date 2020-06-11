@@ -25,7 +25,7 @@ steps:
     entrypoint: 'npm'
     args: ["run", "copy"]
   # Testing list
-    - name: 'ubuntu'
+  - name: 'ubuntu'
     args: ['ls -la', 'pwd']
   # Deploy functions & hosting 
   - name: "gcr.io/nuestrodinero/firebase"

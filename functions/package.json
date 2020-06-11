@@ -6,7 +6,7 @@
     "serve": "firebase emulators:start --only functions,hosting",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
-    "copy": "node copy ",
+    "copy": "node copy",
     "deploy": "firebase deploy --only functions,hosting",
     "logs": "firebase functions:log"
   },

@@ -15,6 +15,7 @@ if (!fs.existsSync(dest)) {
 
 rimraf.sync(dest);
 copyFolderSync(src, dest);
+fs.renameSync(`${src}/browser/index.html`, `${src}/browser/--index.html`);
 
 function copyFolderSync(from, to) {
   fs.mkdirSync(to);

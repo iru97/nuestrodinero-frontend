@@ -11,9 +11,6 @@ steps:
   - name: node:12.16.1
     entrypoint: "npm"
     args: ["run", "build:ssr"]
-  # Testing list
-  - name: 'ubuntu'
-    args: ['ls -la', 'pwd']
   # install functions package.json 
   - name: 'gcr.io/cloud-builders/npm'
     dir: 'functions'
@@ -24,9 +21,6 @@ steps:
     dir: 'functions'
     entrypoint: 'npm'
     args: ["run", "copy"]
-  # Testing list
-  - name: 'ubuntu'
-    args: ['ls -la', 'pwd']
   # Deploy functions & hosting 
   - name: "gcr.io/nuestrodinero/firebase"
     dir: 'functions'

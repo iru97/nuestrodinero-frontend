@@ -1,4 +1,15 @@
 import * as _ from 'underscore';
+import { Subscription } from 'rxjs';
+import { chartTypesToArray } from '../utils';
+import { ActivatedRoute } from '@angular/router';
+import { Stats } from './statistics/stats.model';
+import { COLOR_PALLETE, CHART_TYPES, AppStoreService } from '../core';
+import { pymeStats } from './statistics/pymes.stats';
+import { AppState, defaultState } from '../core/app.state';
+import { MatSelectChange } from '@angular/material/select';
+import { activityStats } from './statistics/activity.stats';
+import { isPlatformBrowser, CurrencyPipe } from '@angular/common';
+import { OfferValues } from '../contracts/components/sellers-offers/offerValues.model';
 import {
   Chart,
   ChartData,
@@ -7,16 +18,6 @@ import {
   ChartTooltipItem,
   PositionType,
 } from 'chart.js';
-import { AppState, defaultState } from '../core/app.state';
-import { chartTypesToArray } from '../utils';
-import { ActivatedRoute } from '@angular/router';
-import { Stats } from './statistics/stats.model';
-import { COLOR_PALLETE, CHART_TYPES } from '../core';
-import { pymeStats } from './statistics/pymes.stats';
-import { MatSelectChange } from '@angular/material/select';
-import { activityStats } from './statistics/activity.stats';
-import { isPlatformBrowser, CurrencyPipe } from '@angular/common';
-import { OfferValues } from '../contracts/components/sellers-offers/offerValues.model';
 import {
   Component,
   OnInit,
@@ -25,6 +26,8 @@ import {
   AfterViewInit,
   ViewChild,
   ElementRef,
+  OnDestroy,
+  ChangeDetectorRef,
 } from '@angular/core';
 
 @Component({
@@ -32,8 +35,10 @@ import {
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.scss'],
 })
-export class ChartsComponent implements OnInit, AfterViewInit {
+export class ChartsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('chartContainer') chartContainer: ElementRef;
+  private subscription: Subscription;
+
   chartOptions: string[] = chartTypesToArray();
   offerValues: OfferValues[] = [];
   pieOptions: any = this.initOptions();
@@ -49,6 +54,7 @@ export class ChartsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private appStore: AppStoreService,
     @Inject(PLATFORM_ID) private platformId
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -56,9 +62,20 @@ export class ChartsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.appState = this.activatedRoute.snapshot.data['estadisticas'];
+
     if (!this.appState) {
       this.appState = defaultState();
     }
+
+    if (this.isBrowser) {
+      this.subscription = this.appStore.appState$.subscribe((state) => {
+        if (state.contractCollection.length) {
+          this.appState = state;
+          this.ngAfterViewInit();
+        }
+      });
+    }
+
     this.offerValues = this.appState.contractCollection.reduce(
       (acc, curr) => acc.concat(curr.content.offerValues),
       []
@@ -180,5 +197,9 @@ export class ChartsComponent implements OnInit, AfterViewInit {
     } else {
       return 'left';
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription ? this.subscription.unsubscribe() : '';
   }
 }

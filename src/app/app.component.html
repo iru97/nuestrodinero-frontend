@@ -1,6 +1,12 @@
 <app-header></app-header>
 <app-google-ad fxHide.lt-md></app-google-ad>
-<div id="app-content">
+<div
+  id="app-content"
+  fxLayout="column"
+  fxLayoutAlign="start stretch"
+  fxLayoutGap="0.1em"
+>
+  <app-date-range></app-date-range>
   <router-outlet></router-outlet>
 </div>
 <app-google-ad fxHide.lt-md></app-google-ad>

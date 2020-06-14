@@ -13,6 +13,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TotalCostPipe } from './pipes/total-cost.pipe';
+import { CustomDatePipe } from './pipes/custom-date.pipe';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const SHARED_MODULES = [
   CommonModule,
@@ -27,11 +33,22 @@ const SHARED_MODULES = [
   MatMenuModule,
   MatFormFieldModule,
   MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatInputModule,
+  MatCheckboxModule,
+  FormsModule,
+  ReactiveFormsModule,
 ];
 
 @NgModule({
-  declarations: [...SHARED_COMPONENTS, TotalCostPipe],
+  declarations: [...SHARED_COMPONENTS, TotalCostPipe, CustomDatePipe],
   imports: [...SHARED_MODULES],
-  exports: [...SHARED_COMPONENTS, ...SHARED_MODULES, TotalCostPipe],
+  exports: [
+    ...SHARED_COMPONENTS,
+    ...SHARED_MODULES,
+    TotalCostPipe,
+    CustomDatePipe,
+  ],
 })
 export class SharedModule {}

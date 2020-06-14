@@ -5,6 +5,7 @@ import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.compo
 import { NoContentCardComponent } from './no-content-card/no-content-card.component';
 import { ShareableCardComponent } from './shareable-card/shareable-card.component';
 import { MenuComponent } from './menu/menu.component';
+import { DateRangeComponent } from './date-range/date-range.component';
 
 export const SHARED_COMPONENTS: any[] = [
   FooterComponent,
@@ -14,4 +15,5 @@ export const SHARED_COMPONENTS: any[] = [
   NoContentCardComponent,
   ShareableCardComponent,
   MenuComponent,
+  DateRangeComponent,
 ];

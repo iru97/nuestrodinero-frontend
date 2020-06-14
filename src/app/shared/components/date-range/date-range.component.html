@@ -1,0 +1,54 @@
+<div
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+  fxLayoutGap="0.2em"
+  [formGroup]="form"
+>
+  <div fxFlex fxLayout.lt-md="column" fxLayoutAlign="start center">
+    <mat-form-field>
+      <mat-label>Fecha inicial</mat-label>
+      <input
+        matInput
+        [matDatepicker]="startMobile"
+        [min]="MIN_DATE"
+        [max]="MAX_DATE"
+        formControlName="startDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="startMobile"
+      ></mat-datepicker-toggle>
+
+      <mat-datepicker touchUi #startMobile disabled="false"></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Fecha final</mat-label>
+      <input
+        matInput
+        [matDatepicker]="endMobile"
+        [min]="testDate"
+        [max]="MAX_DATE"
+        formControlName="endDate"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="endMobile"
+      ></mat-datepicker-toggle>
+      <mat-datepicker touchUi #endMobile disabled="false"></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div fxFlex="20">
+    <button
+      mat-fab
+      color="primary"
+      [disabled]="form.invalid"
+      (click)="doSearch()"
+    >
+      <mat-icon>
+        search
+      </mat-icon>
+    </button>
+  </div>
+</div>

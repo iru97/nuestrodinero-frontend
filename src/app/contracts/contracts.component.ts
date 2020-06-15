@@ -5,6 +5,7 @@ import { Title, Meta } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { AppState, defaultState } from '../core/app.state';
+import { AppStoreService } from '../core';
 
 @Component({
   selector: 'app-contracts',
@@ -17,6 +18,7 @@ export class ContractsComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private appStore: AppStoreService,
     private title: Title,
     private meta: Meta
   ) {}
@@ -25,6 +27,10 @@ export class ContractsComponent implements OnInit, OnDestroy {
     this.initMetatags();
 
     let appState: AppState = this.activatedRoute.snapshot.data['contratos'];
+
+    this.subscription = this.appStore.appState$.subscribe((state) => {
+      this.contractsCollection = state.contractCollection;
+    });
 
     if (!appState) {
       appState = defaultState();

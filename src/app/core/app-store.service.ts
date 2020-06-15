@@ -21,7 +21,6 @@ export class AppStoreService {
   }
 
   getState(): AppState {
-    console.log('Getting state ...');
     return { ...this.appState.value };
   }
 

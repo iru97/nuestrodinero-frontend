@@ -1,7 +1,17 @@
 <app-header></app-header>
 <app-google-ad fxHide.lt-md></app-google-ad>
-<div id="app-content">
-  <router-outlet></router-outlet>
+<div
+  id="app-content"
+  fxLayout="column"
+  fxLayoutAlign="start stretch"
+  fxLayoutGap="0.1em"
+>
+  <app-date-range></app-date-range>
+  <router-outlet *ngIf="!isLoading; else isLoadingTemplate"></router-outlet>
 </div>
 <app-google-ad fxHide.lt-md></app-google-ad>
 <app-footer></app-footer>
+
+<ng-template #isLoadingTemplate>
+  <app-loading-overlay></app-loading-overlay>
+</ng-template>

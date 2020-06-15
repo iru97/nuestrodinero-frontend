@@ -70,7 +70,7 @@ export class ContractResolverService implements Resolve<AppState> {
     return this.boeService.getAds(today).pipe(
       map<Contract[], AppState>((contractCollection) => {
         return {
-          dateStart: formatDate(today),
+          dateStart: today,
           contractCollection,
         };
       }),

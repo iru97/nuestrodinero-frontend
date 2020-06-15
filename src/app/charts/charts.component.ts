@@ -67,15 +67,6 @@ export class ChartsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.appState = defaultState();
     }
 
-    if (this.isBrowser) {
-      this.subscription = this.appStore.appState$.subscribe((state) => {
-        if (state.contractCollection.length) {
-          this.appState = state;
-          this.ngAfterViewInit();
-        }
-      });
-    }
-
     this.offerValues = this.appState.contractCollection.reduce(
       (acc, curr) => acc.concat(curr.content.offerValues),
       []
@@ -84,9 +75,12 @@ export class ChartsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.isBrowser) {
-      this.initData();
-      this.initChartConfig();
-      this.drawChart();
+      this.subscription = this.appStore.appState$.subscribe((state) => {
+        this.appState = state;
+        this.initChartsJs();
+      });
+
+      this.initChartsJs();
     }
   }
 
@@ -110,6 +104,12 @@ export class ChartsComponent implements OnInit, OnDestroy, AfterViewInit {
   onResize(): void {
     this.chartjsConfig.options.legend.position = this.getLegendPosition();
     this.chartjsInstance.update();
+  }
+
+  private initChartsJs(): void {
+    this.initData();
+    this.initChartConfig();
+    this.drawChart();
   }
 
   private initChartConfig(): void {

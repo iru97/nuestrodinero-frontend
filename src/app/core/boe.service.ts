@@ -6,6 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { Contract } from '../contracts/components/contract/contract.model';
 import { AppStoreService } from './app-store.service';
 import { AppState } from './app.state';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +14,15 @@ import { AppState } from './app.state';
 export class BoeService {
   private url = environment.serverUrl;
 
+  private isLoading: Subject<boolean> = new Subject();
+
+  isLoading$ = this.isLoading.asObservable();
+
   constructor(private http: HttpClient, private appStore: AppStoreService) {}
 
   getAds(start: Date, end: Date = new Date()): Observable<Contract[]> {
+    this.isLoading.next(true);
+
     return this.http
       .get<Contract[]>(
         `${
@@ -26,7 +33,7 @@ export class BoeService {
         tap((contractCollection) => {
           this.saveContractsToState(contractCollection, start, end);
         }),
-        catchError(this.adErrHandler)
+        catchError(this.adErrHandler.bind(this))
       );
   }
 
@@ -42,10 +49,12 @@ export class BoeService {
     };
 
     this.appStore.setState(state);
+    this.isLoading.next(false);
   }
 
   adErrHandler(err): Observable<Contract[]> {
     console.warn('BoeService warning -> ', err);
+    this.isLoading.next(false);
 
     return of([]);
   }

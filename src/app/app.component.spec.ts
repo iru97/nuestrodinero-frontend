@@ -4,6 +4,7 @@ import { SharedModule } from './shared/shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -12,7 +13,12 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [HttpClientTestingModule, SharedModule, RouterTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        SharedModule,
+        RouterTestingModule,
+        BrowserAnimationsModule,
+      ],
     }).compileComponents();
   }));
 
@@ -39,5 +45,12 @@ describe('AppComponent', () => {
   it('should render google-ads components', () => {
     const element = fixture.debugElement.query(By.css('app-google-ad'));
     expect(element).toBeTruthy();
+  });
+
+  it('should render loading overlay when requesting data', () => {
+    if (component.isLoading) {
+      const element = fixture.debugElement.query(By.css('app-loading-overlay'));
+      expect(element).toBeTruthy();
+    }
   });
 });

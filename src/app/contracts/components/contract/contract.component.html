@@ -1,6 +1,7 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>
+      [{{ contract.metadata.date | date: 'shortDate' }}] -
       {{ contract.content.contractingAuthority.name }}
 
       <mat-divider [vertical]="true"></mat-divider>

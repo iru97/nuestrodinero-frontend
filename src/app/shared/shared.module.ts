@@ -19,6 +19,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
 
 const SHARED_MODULES = [
   CommonModule,

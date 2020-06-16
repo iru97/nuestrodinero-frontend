@@ -4,7 +4,13 @@
   fxLayoutGap="0.2em"
   [formGroup]="form"
 >
-  <div fxFlex fxLayout.lt-md="column" fxLayoutAlign="start center">
+  <div
+    fxFlex
+    fxLayout.lt-md="column"
+    fxLayoutAlign.lt-md="start center"
+    fxLayout="row"
+    fxLayoutAlign="space-evenly center"
+  >
     <mat-form-field data-testid="startCalendar">
       <mat-label>Fecha inicial</mat-label>
       <input
@@ -39,7 +45,7 @@
     </mat-form-field>
   </div>
 
-  <div fxFlex="20">
+  <div fxFlex="20" fxLayoutAlign.gt-md="center center">
     <button
       mat-fab
       color="primary"

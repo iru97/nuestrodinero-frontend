@@ -27,7 +27,6 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
-  ChangeDetectorRef,
 } from '@angular/core';
 
 @Component({
@@ -61,25 +60,28 @@ export class ChartsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.appState = this.activatedRoute.snapshot.data['estadisticas'];
+    if (this.isBrowser) {
+      // SPA
+      this.subscription = this.appStore.appState$.subscribe((state) => {
+        this.appState = state;
+      });
+    } else {
+      // SSR
+      this.appState = this.activatedRoute.snapshot.data['estadisticas'];
 
-    if (!this.appState) {
-      this.appState = defaultState();
+      if (!this.appState) {
+        this.appState = defaultState();
+      }
+
+      this.offerValues = this.appState.contractCollection.reduce(
+        (acc, curr) => acc.concat(curr.content.offerValues),
+        []
+      );
     }
-
-    this.offerValues = this.appState.contractCollection.reduce(
-      (acc, curr) => acc.concat(curr.content.offerValues),
-      []
-    );
   }
 
   ngAfterViewInit(): void {
     if (this.isBrowser) {
-      this.subscription = this.appStore.appState$.subscribe((state) => {
-        this.appState = state;
-        this.initChartsJs();
-      });
-
       this.initChartsJs();
     }
   }

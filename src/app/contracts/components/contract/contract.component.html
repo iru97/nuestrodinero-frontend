@@ -6,7 +6,9 @@
       <mat-divider [vertical]="true"></mat-divider>
 
       <span class="error-text">{{
-        contract.content.offerValues | totalCost | currency: 'EUR':'symbol':'.2-2'
+        contract.content.offerValues
+          | totalCost
+          | currency: 'EUR':'symbol':'.2-2'
       }}</span>
     </mat-card-title>
     <mat-card-subtitle
@@ -20,24 +22,31 @@
     </mat-card-subtitle>
   </mat-card-header>
   <!-- Contenido -->
-  <mat-card-content fxLayout.lt-md="column" fxLayoutAlign.lt-md="start stretch">
+  <mat-card-content
+    fxLayout.lt-md="column"
+    fxLayoutAlign.lt-md="start stretch"
+    ngClass.gt-md="distribution"
+  >
     <!-- Adjudicador -->
     <app-contracting-authority
+      fxFlex.gt-md="50"
       [contractingAuthority]="contract.content.contractingAuthority"
     ></app-contracting-authority>
 
-    <!-- Descripciones y detalles -->
-    <app-description
-      [descriptions]="contract.content.sellingDescription"
-      [details]="contract.content.details"
-    ></app-description>
-
     <!-- Adjudicatarios y ofertas -->
     <app-sellers-offers
+      fxFlex.gt-md="50"
       [sellers]="contract.content.sellers"
       [offerValues]="contract.content.offerValues"
       [offersReceived]="contract.content.offersReceived"
     ></app-sellers-offers>
+
+    <!-- Descripciones y detalles -->
+    <app-description
+      fxFlex
+      [descriptions]="contract.content.sellingDescription"
+      [details]="contract.content.details"
+    ></app-description>
   </mat-card-content>
 
   <mat-card-actions>

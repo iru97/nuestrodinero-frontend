@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { Contract } from '../contracts/components/contract/contract.model';
 import { AppStoreService } from './app-store.service';
 import { AppState } from './app.state';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ import { Subject } from 'rxjs';
 export class BoeService {
   private url = environment.serverUrl;
 
-  private isLoading: Subject<boolean> = new Subject();
+  private isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   isLoading$ = this.isLoading.asObservable();
 

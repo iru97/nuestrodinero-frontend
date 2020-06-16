@@ -34,4 +34,18 @@ describe('BoeService', () => {
 
     expect(callApiSpy).toHaveBeenCalled();
   });
+
+  it('should return a list of anuncios', (done) => {
+    const ads$: Observable<Contract[]> = of([emptyContract()]);
+
+    const callApiSpy = jest.spyOn(service, 'getAds').mockReturnValue(ads$);
+    service.getAds(new Date(), new Date());
+
+    ads$.subscribe((document) => {
+      expect(document).toHaveLength(1);
+      done();
+    });
+
+    expect(callApiSpy).toHaveBeenCalled();
+  });
 });

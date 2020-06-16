@@ -13,7 +13,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./contracts/contracts.module').then((m) => m.ContractsModule),
     resolve: {
-      contratos: ContractResolverService,
+      appState: ContractResolverService,
     },
   },
   {

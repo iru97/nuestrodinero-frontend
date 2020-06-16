@@ -1,7 +1,17 @@
 <div class="charts" fxLayout="column" fxLayoutAlign="start stretch">
   <mat-card fxFlex fxLayout="column">
     <mat-card-header fxFlex="10">
-      <mat-card-title>Estadisticas del XXX - XXX</mat-card-title>
+      <mat-card-title>
+        Datos del {{ appState.dateStart | date: 'shortDate' }}
+        <span
+          *ngIf="
+            appState.dateEnd &&
+            appState.dateEnd.getTime() !== appState.dateStart.getTime()
+          "
+        >
+          al {{ appState.dateEnd | date: 'shortDate' }}
+        </span>
+      </mat-card-title>
       <mat-card-subtitle>
         Total gastado:
         {{ offerValues | totalCost | currency: 'EUR':'symbol':'.2-2' }}

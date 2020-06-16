@@ -31,7 +31,7 @@ describe('NoContentCardComponent', () => {
     ).nativeElement;
 
     expect(element.textContent).toEqual(
-      ' No hay anuncios de formalizaciones de contratos hoy. '
+      ' No hay anuncios de formalizaciones de contratos para las fechas seleccionadas. '
     );
   });
 });

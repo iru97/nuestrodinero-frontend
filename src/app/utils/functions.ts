@@ -1,5 +1,4 @@
 import { CHART_TYPES } from '../core/const.api.model';
-import { isArray } from 'underscore';
 
 /*
  * If countUndefined is false we count the properties that has value != undefined
@@ -16,7 +15,7 @@ export const numberOfFieldsWithValue = (
 
     if (isObject(item)) {
       if (countUndefined) {
-        if (isArray(item) && item.length == 0) {
+        if (Array.isArray(item) && item.length == 0) {
           counter++;
         } else {
           counter += numberOfFieldsWithValue(item, countUndefined);

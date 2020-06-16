@@ -6,6 +6,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { YesNoPipe } from './pipes/yes-no.pipe';
+import { emptyContract } from './components/contract/contract.model';
+import { By } from '@angular/platform-browser';
 
 describe('ContractsComponent', () => {
   let component: ContractsComponent;
@@ -32,31 +34,17 @@ describe('ContractsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should render loading symbol when loading', () => {
-  //   const element = fixture.debugElement.query(By.css('app-loading-overlay'));
-  //   expect(element).toBeTruthy();
-  // });
+  it('should render N contracts', () => {
+    component.contractsCollection = [emptyContract()];
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('app-contract'));
+    expect(element).toBeTruthy();
+  });
 
-  // it('should not render loading symbol when loading is not loading', () => {
-  //   component.isLoading = false;
-  //   fixture.detectChanges();
-  //   const element = fixture.debugElement.query(By.css('app-loading-overlay'));
-  //   expect(element).toBeFalsy();
-  // });
-
-  // it('should render N contracts', () => {
-  //   component.isLoading = false;
-  //   component.contractsCollection = [emptyContract()];
-  //   fixture.detectChanges();
-  //   const element = fixture.debugElement.query(By.css('app-contract'));
-  //   expect(element).toBeTruthy();
-  // });
-
-  // it('should render no content card when there are no contracts', () => {
-  //   component.isLoading = false;
-  //   component.contractsCollection = [];
-  //   fixture.detectChanges();
-  //   const element = fixture.debugElement.query(By.css('app-no-content-card'));
-  //   expect(element).toBeTruthy();
-  // });
+  it('should render no content card when there are no contracts', () => {
+    component.contractsCollection = [];
+    fixture.detectChanges();
+    const element = fixture.debugElement.query(By.css('app-no-content-card'));
+    expect(element).toBeTruthy();
+  });
 });

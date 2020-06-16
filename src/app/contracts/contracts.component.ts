@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Contract } from './components/contract/contract.model';
 import { Title, Meta } from '@angular/platform-browser';
@@ -6,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { AppState, defaultState } from '../core/app.state';
 import { AppStoreService } from '../core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-contracts',
@@ -15,10 +23,12 @@ import { AppStoreService } from '../core';
 export class ContractsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   contractsCollection: Contract[] = [];
+  privat;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private appStore: AppStoreService,
+    @Inject(PLATFORM_ID) private platformId,
     private title: Title,
     private meta: Meta
   ) {}
@@ -26,17 +36,21 @@ export class ContractsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initMetatags();
 
-    let appState: AppState = this.activatedRoute.snapshot.data['contratos'];
+    if (isPlatformBrowser(this.platformId)) {
+      // SPA data
+      this.subscription = this.appStore.appState$.subscribe((appState) => {
+        this.contractsCollection = appState.contractCollection;
+      });
+    } else {
+      // SSR data
+      let appState: AppState = this.activatedRoute.snapshot.data['appState'];
 
-    this.subscription = this.appStore.appState$.subscribe((state) => {
-      this.contractsCollection = state.contractCollection;
-    });
+      if (!appState) {
+        appState = defaultState();
+      }
 
-    if (!appState) {
-      appState = defaultState();
+      this.contractsCollection = appState.contractCollection;
     }
-
-    this.contractsCollection = appState.contractCollection;
   }
 
   initMetatags(): void {

@@ -6,7 +6,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AppStoreService {
-  // private appState: AppState = defaultState();
   private appState: BehaviorSubject<AppState> = new BehaviorSubject<AppState>(
     defaultState()
   );

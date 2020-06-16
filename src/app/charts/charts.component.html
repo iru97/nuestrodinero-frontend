@@ -3,7 +3,12 @@
     <mat-card-header fxFlex="10">
       <mat-card-title>
         Datos del {{ appState.dateStart | date: 'shortDate' }}
-        <span *ngIf="appState.dateEnd">
+        <span
+          *ngIf="
+            appState.dateEnd &&
+            appState.dateEnd.getTime() !== appState.dateStart.getTime()
+          "
+        >
           al {{ appState.dateEnd | date: 'shortDate' }}
         </span>
       </mat-card-title>

@@ -5,10 +5,10 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AppState } from './app.state';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
 import { BoeService } from './boe.service';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, take, takeLast, last } from 'rxjs/operators';
 import { Contract } from '../contracts/components/contract/contract.model';
 import { isPlatformServer, isPlatformBrowser } from '@angular/common';
 import { AppStoreService } from './app-store.service';
@@ -66,7 +66,6 @@ export class ContractResolverService implements Resolve<AppState> {
   // This runs only in SSR, and stores the data retrieved from the service in the transferState service
   private saveAppStateToTransferState(stateTransferKey): Observable<AppState> {
     const today = new Date();
-
     return this.boeService.getAds(today).pipe(
       map<Contract[], AppState>((contractCollection) => {
         return {

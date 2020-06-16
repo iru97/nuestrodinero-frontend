@@ -6,6 +6,7 @@ import { NoContentCardComponent } from './no-content-card/no-content-card.compon
 import { ShareableCardComponent } from './shareable-card/shareable-card.component';
 import { MenuComponent } from './menu/menu.component';
 import { DateRangeComponent } from './date-range/date-range.component';
+import { ScrollTopComponent } from './scroll-top/scroll-top.component';
 
 export const SHARED_COMPONENTS: any[] = [
   FooterComponent,
@@ -16,4 +17,5 @@ export const SHARED_COMPONENTS: any[] = [
   ShareableCardComponent,
   MenuComponent,
   DateRangeComponent,
+  ScrollTopComponent
 ];

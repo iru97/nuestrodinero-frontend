@@ -4,9 +4,9 @@ steps:
     entrypoint: 'npm'
     args: ["install"]
   # Tests
-  - name: "gcr.io/cloud-builders/npm"
-    entrypoint: 'npm'
-    args: ["run", "test"]
+  # - name: "gcr.io/cloud-builders/npm"
+  #   entrypoint: 'npm'
+  #   args: ["run", "test"]
   # Build
   - name: node:12.16.1
     entrypoint: "npm"

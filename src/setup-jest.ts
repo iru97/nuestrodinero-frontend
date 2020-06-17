@@ -42,5 +42,9 @@ Object.defineProperty(window, 'getComputedStyle', {
   }),
 });
 
+const noop = () => {};
+Object.defineProperty(window, 'scrollTo', { value: noop, writable: true });
+
+Object.defineProperty(window, 'open', { value: noop, writable: true });
 /* output shorter and more meaningful Zone error stack traces */
 // Error.stackTraceLimit = 2;

@@ -36,7 +36,7 @@ describe('ContractComponent', () => {
 
   it('should open new tab when clicked on PDF with given url', () => {
     component.contract.metadata.pdfUrl = '/boe-id';
-    const windowOpenSpy = spyOn(window, 'open');
+    const windowOpenSpy = jest.spyOn(window, 'open');
 
     const viewPdfBtn: HTMLButtonElement = fixture.debugElement.query(
       By.css('button')

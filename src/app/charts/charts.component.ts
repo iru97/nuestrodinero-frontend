@@ -64,6 +64,11 @@ export class ChartsComponent implements OnInit, OnDestroy, AfterViewInit {
       // SPA
       this.subscription = this.appStore.appState$.subscribe((state) => {
         this.appState = state;
+
+        this.offerValues = state.contractCollection.reduce(
+          (acc, curr) => acc.concat(curr.content.offerValues),
+          []
+        );
       });
     } else {
       // SSR

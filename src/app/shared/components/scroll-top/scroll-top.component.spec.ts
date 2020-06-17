@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ScrollTopComponent } from './scroll-top.component';
+import { MatIconModule } from '@angular/material/icon';
+import { By } from '@angular/platform-browser';
 
 describe('ScrollTopComponent', () => {
   let component: ScrollTopComponent;
@@ -8,9 +10,9 @@ describe('ScrollTopComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScrollTopComponent ]
-    })
-    .compileComponents();
+      declarations: [ScrollTopComponent],
+      imports: [MatIconModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,5 +23,21 @@ describe('ScrollTopComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should scroll to top when clicked', () => {
+    const button: HTMLButtonElement = fixture.debugElement.query(
+      By.css('button')
+    ).nativeElement;
+
+    const windowStub = jest.spyOn(window, 'scrollTo');
+
+    button.click();
+
+    // window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    expect(component).toBeTruthy();
+    expect(windowStub).toHaveBeenCalled();
+    expect(windowStub).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
   });
 });

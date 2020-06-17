@@ -1,6 +1,7 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>
+      [{{ contract.metadata.date | date: 'shortDate' }}] -
       {{ contract.content.contractingAuthority.name }}
 
       <mat-divider [vertical]="true"></mat-divider>
@@ -22,24 +23,27 @@
     </mat-card-subtitle>
   </mat-card-header>
   <!-- Contenido -->
-  <mat-card-content
-    fxLayout.lt-md="column"
-    fxLayoutAlign.lt-md="start stretch"
-    ngClass.gt-md="distribution"
-  >
-    <!-- Adjudicador -->
-    <app-contracting-authority
-      fxFlex.gt-md="50"
-      [contractingAuthority]="contract.content.contractingAuthority"
-    ></app-contracting-authority>
+  <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
+    <div
+      fxLayout="column"
+      fxLayoutAlign="start stretch"
+      fxLayout.gt-md="row"
+      fxLayoutAlign.gt-md="start stretch"
+    >
+      <!-- Adjudicador -->
+      <app-contracting-authority
+        fxFlex.gt-md="50"
+        [contractingAuthority]="contract.content.contractingAuthority"
+      ></app-contracting-authority>
 
-    <!-- Adjudicatarios y ofertas -->
-    <app-sellers-offers
-      fxFlex.gt-md="50"
-      [sellers]="contract.content.sellers"
-      [offerValues]="contract.content.offerValues"
-      [offersReceived]="contract.content.offersReceived"
-    ></app-sellers-offers>
+      <!-- Adjudicatarios y ofertas -->
+      <app-sellers-offers
+        fxFlex.gt-md="50"
+        [sellers]="contract.content.sellers"
+        [offerValues]="contract.content.offerValues"
+        [offersReceived]="contract.content.offersReceived"
+      ></app-sellers-offers>
+    </div>
 
     <!-- Descripciones y detalles -->
     <app-description

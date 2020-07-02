@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
+import { AdsenseModule } from 'ng2-adsense';
 
 const SHARED_MODULES = [
   CommonModule,
@@ -40,6 +41,9 @@ const SHARED_MODULES = [
   MatCheckboxModule,
   FormsModule,
   ReactiveFormsModule,
+  AdsenseModule.forRoot({
+    adClient: 'ca-pub-8909054692709368',
+  }),
 ];
 
 @NgModule({

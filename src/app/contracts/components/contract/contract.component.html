@@ -2,7 +2,7 @@
   <mat-card-header>
     <mat-card-title>
       [{{ contract.metadata.date | date: 'shortDate' }}] -
-      {{ contract.content.contractingAuthority.name }}
+      {{ contract.content.contractAuthority.name }}
 
       <mat-divider [vertical]="true"></mat-divider>
 
@@ -33,13 +33,13 @@
       <!-- Adjudicador -->
       <app-contracting-authority
         fxFlex.gt-md="50"
-        [contractingAuthority]="contract.content.contractingAuthority"
+        [contractingAuthority]="contract.content.contractAuthority"
       ></app-contracting-authority>
 
       <!-- Adjudicatarios y ofertas -->
       <app-sellers-offers
         fxFlex.gt-md="50"
-        [sellers]="contract.content.sellers"
+        [sellers]="contract.content.awardees"
         [offerValues]="contract.content.offerValues"
         [offersReceived]="contract.content.offersReceived"
       ></app-sellers-offers>
@@ -48,7 +48,7 @@
     <!-- Descripciones y detalles -->
     <app-description
       fxFlex
-      [descriptions]="contract.content.sellingDescription"
+      [descriptions]="contract.content.description"
       [details]="contract.content.details"
     ></app-description>
   </mat-card-content>

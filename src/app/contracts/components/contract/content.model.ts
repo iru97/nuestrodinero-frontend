@@ -14,7 +14,7 @@ export interface Content {
   offersReceived: OffersReceived[];
   awardees: Seller[];
   offerValues: OfferValues[];
-  date: Date | undefined;
+  date: string;
 }
 
 export const emptyContent = (): Content => ({
@@ -24,5 +24,5 @@ export const emptyContent = (): Content => ({
   offersReceived: [],
   awardees: [],
   offerValues: [],
-  date: undefined,
+  date: '',
 });

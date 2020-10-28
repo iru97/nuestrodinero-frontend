@@ -11,7 +11,7 @@ export const activityStats = (contractCollection: Contract[]): Stats[] => {
   const caaSpent: ContractingAuthoritiesSpent[] = contractCollection.map(
     (c) => {
       let totalSpent: number = totalCost.transform(c.content.offerValues);
-      return { ...c.content.contractingAuthority, totalSpent };
+      return { ...c.content.contractAuthority, totalSpent };
     }
   );
 

@@ -1,9 +1,9 @@
 export interface OfferValues {
-  cost: number;
+  value: number;
   text: string;
 }
 
 export const emptyOfferValue = (): OfferValues => ({
   text: '',
-  cost: 0,
+  value: 0,
 });

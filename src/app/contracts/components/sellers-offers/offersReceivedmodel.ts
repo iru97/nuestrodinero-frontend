@@ -1,9 +1,9 @@
 export interface OffersReceived {
   text: string;
-  totalOffers: number;
+  total: number;
 }
 
 export const emptyOffersReceived = (): OffersReceived => ({
   text: '',
-  totalOffers: 0,
+  total: 0,
 });

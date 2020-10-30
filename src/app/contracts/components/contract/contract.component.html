@@ -7,9 +7,7 @@
       <mat-divider [vertical]="true"></mat-divider>
 
       <span class="error-text">{{
-        contract.content.offerValues
-          | totalCost
-          | currency: 'EUR':'symbol':'.2-2'
+        totalSpent | currency: 'EUR':'symbol':'.2-2'
       }}</span>
     </mat-card-title>
     <mat-card-subtitle

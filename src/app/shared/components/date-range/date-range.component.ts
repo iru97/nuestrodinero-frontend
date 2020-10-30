@@ -12,12 +12,15 @@ export class DateRangeComponent implements OnInit, OnDestroy {
   readonly MIN_DATE: Date = new Date(2018, 2, 13);
   readonly MAX_DATE: Date = new Date();
 
+  minEndDate: Date;
+
   form: FormGroup;
 
   private subscription: Subscription;
   private observer: PartialObserver<Date>;
 
   constructor(private boeService: BoeService) {
+    this.minEndDate = new Date();
     this.form = new FormGroup({
       startDate: new FormControl(
         { value: new Date(), disabled: true },
@@ -42,6 +45,7 @@ export class DateRangeComponent implements OnInit, OnDestroy {
 
   onDateStartChangeHandler(value: Date): void {
     this.form.get('endDate').setValue(value);
+    this.minEndDate = value;
   }
 
   doSearch(): void {

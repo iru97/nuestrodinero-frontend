@@ -1,8 +1,8 @@
 export interface Metadata {
   identifier: string;
   department: string;
-  diaryNumber: number;
-  date: Date;
+  diary: number;
+  date: Date | undefined;
   title: string;
   section: string;
   pdfUrl: string;
@@ -12,7 +12,7 @@ export const emptyMetadata = (): Metadata => ({
   department: '',
   date: undefined,
   identifier: '',
-  diaryNumber: 0,
+  diary: 0,
   section: '',
   title: '',
   pdfUrl: '',

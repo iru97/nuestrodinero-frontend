@@ -65,7 +65,12 @@ export class ContractResolverService implements Resolve<AppState> {
 
   // This runs only in SSR, and stores the data retrieved from the service in the transferState service
   private saveAppStateToTransferState(stateTransferKey): Observable<AppState> {
-    const today = new Date();
+    const todayUtc = Date.UTC(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate()
+    );
+    const today = new Date(todayUtc);
     return this.boeService.getAds(today).pipe(
       map<Contract[], AppState>((contractCollection) => {
         return {

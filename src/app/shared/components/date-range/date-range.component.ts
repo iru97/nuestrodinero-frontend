@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription, PartialObserver } from 'rxjs';
-import { AppStoreService, BoeService } from 'src/app/core';
+import { BoeService } from 'src/app/core';
 
 @Component({
   selector: 'app-date-range',
@@ -12,7 +12,7 @@ export class DateRangeComponent implements OnInit, OnDestroy {
   readonly MIN_DATE: Date = new Date(2018, 2, 13);
   readonly MAX_DATE: Date = new Date();
 
-  testDate: Date = new Date();
+  minEndDate: Date;
 
   form: FormGroup;
 
@@ -20,6 +20,7 @@ export class DateRangeComponent implements OnInit, OnDestroy {
   private observer: PartialObserver<Date>;
 
   constructor(private boeService: BoeService) {
+    this.minEndDate = new Date();
     this.form = new FormGroup({
       startDate: new FormControl(
         { value: new Date(), disabled: true },
@@ -44,11 +45,12 @@ export class DateRangeComponent implements OnInit, OnDestroy {
 
   onDateStartChangeHandler(value: Date): void {
     this.form.get('endDate').setValue(value);
-    this.testDate = value;
+    this.minEndDate = value;
   }
 
   doSearch(): void {
     let { startDate, endDate } = this.form.getRawValue();
+
     this.boeService.getAds(startDate, endDate).toPromise();
   }
 

@@ -15,5 +15,10 @@ export class SellersOffersComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console.log('Sellerss', this.sellers);
+    // console.log('offersReceived', this.offersReceived);
+    // console.log('offerValues', this.offerValues);
+    // console.log('--------------------');
+  }
 }

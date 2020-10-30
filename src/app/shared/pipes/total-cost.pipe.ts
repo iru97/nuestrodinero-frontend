@@ -12,6 +12,7 @@ export class TotalCostPipe implements PipeTransform {
       return 0;
     }
 
-    return collection.reduce((acc, curr: OfferValues) => acc + curr.cost, 0);
+    //return collection[0].value ?? 0;
+    return collection.reduce((acc, curr: OfferValues) => acc + curr.value, 0);
   }
 }

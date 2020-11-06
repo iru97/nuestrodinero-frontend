@@ -92,11 +92,11 @@ describe('ContractComponent', () => {
   it('should render the total cost of offers', () => {
     const ofertas: OfferValues[] = [
       {
-        cost: 2,
+        value: 2,
         text: '',
       },
       {
-        cost: 2,
+        value: 2,
         text: '',
       },
     ];

@@ -35,3 +35,9 @@ app-header {
 app-footer {
   grid-area: footer;
 }
+
+.support-btn {
+  transform: scale(0.7);
+  position: fixed;
+  bottom: 0rem;
+}

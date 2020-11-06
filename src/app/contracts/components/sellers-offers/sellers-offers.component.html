@@ -22,10 +22,10 @@
         {{ offerValues[i]?.text }}
       </app-label-value>
       <app-label-value label="Coste">
-        {{ offerValues[i]?.cost | currency: 'EUR':'symbol':'.2-2' }}
+        {{ offerValues[i]?.value | currency: 'EUR':'symbol':'.2-2' }}
       </app-label-value>
     </div>
 
-    <mat-divider style="position: relative;"></mat-divider>
+    <mat-divider style="position: relative"></mat-divider>
   </div>
 </div>

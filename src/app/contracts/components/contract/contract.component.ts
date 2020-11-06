@@ -10,11 +10,15 @@ import { numberOfFieldsWithValue } from 'src/app/utils';
 export class ContractComponent implements OnInit {
   @Input() contract: Contract;
   porcentaje: number;
+  totalSpent: number = 0;
 
   constructor() {}
 
   ngOnInit(): void {
     this.porcentaje = this.calculateContractScore(this.contract);
+    this.contract.content.awardees.forEach((seller, index) => {
+      this.totalSpent += this.contract.content.offerValues[index].value;
+    });
   }
 
   calculateContractScore(item: Contract): number {

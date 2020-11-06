@@ -26,7 +26,7 @@ describe('ReduceCollectionPipe', () => {
     const pipe = new TotalCostPipe();
     const collection: OfferValues[] = [
       {
-        cost: 1,
+        value: 1,
         text: '',
       },
     ];
@@ -38,11 +38,11 @@ describe('ReduceCollectionPipe', () => {
     const pipe = new TotalCostPipe();
     const collection: OfferValues[] = [
       {
-        cost: 2,
+        value: 2,
         text: '',
       },
       {
-        cost: 2,
+        value: 2,
         text: '',
       },
     ];

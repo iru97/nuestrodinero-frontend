@@ -23,6 +23,11 @@ export class BoeService {
   getAds(start: Date, end: Date = new Date()): Observable<Contract[]> {
     this.isLoading.next(true);
 
+    // Parse to UTC
+    start = new Date(
+      Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())
+    );
+    end = new Date(Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()));
     return this.http
       .get<Contract[]>(
         `${

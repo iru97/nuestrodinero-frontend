@@ -1,3 +1,4 @@
+import { HostListener } from '@angular/core';
 import { Component } from '@angular/core';
 import { BoeService } from './core';
 

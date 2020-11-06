@@ -9,12 +9,12 @@ export const pymeStats = (contractCollection: Contract[]): Stats[] => {
   const allSellers = getSellerWithOffers(contractCollection);
 
   const pymesCost = allSellers.reduce(
-    (acc, curr) => (curr.pyme ? (acc += curr.cost) : acc),
+    (acc, curr) => (curr.pyme ? (acc += curr.value) : acc),
     0
   );
 
   const nonPymesCost = allSellers.reduce(
-    (acc, curr) => (!curr.pyme ? (acc += curr.cost) : acc),
+    (acc, curr) => (!curr.pyme ? (acc += curr.value) : acc),
     0
   );
 
@@ -38,7 +38,7 @@ const getSellerWithOffers = (contractCollection: Contract[]): SellerOffer[] => {
   return contractCollection.reduce((acc: SellerOffer[], curr: Contract) => {
     let mergedSellersAndOfferValue: SellerOffer[] = [];
 
-    curr.content.sellers.forEach((s, i) => {
+    curr.content.awardees.forEach((s, i) => {
       let item: SellerOffer = { ...s, ...curr.content.offerValues[i] };
       mergedSellersAndOfferValue.push(item);
     });

@@ -3,25 +3,9 @@ steps:
   - name: "gcr.io/cloud-builders/npm"
     entrypoint: 'npm'
     args: ["install"]
-  # Tests
-  # - name: "gcr.io/cloud-builders/npm"
-  #   entrypoint: 'npm'
-  #   args: ["run", "test"]
-  # Build
   - name: node:12.16.1
     entrypoint: "npm"
     args: ["run", "build:ssr"]
-  # install functions package.json 
-  - name: 'gcr.io/cloud-builders/npm'
-    dir: 'functions'
-    entrypoint: 'npm'
-    args: ['install']
-  # Copy
-  - name: "gcr.io/cloud-builders/npm"
-    dir: 'functions'
-    entrypoint: 'npm'
-    args: ["run", "copy"]
-  # Deploy functions & hosting 
   - name: "gcr.io/nuestrodinero/firebase"
     entrypoint: 'firebase'
     args: ["deploy","--project=nuestrodinero","--only=hosting,functions"]

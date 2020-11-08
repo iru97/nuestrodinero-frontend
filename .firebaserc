@@ -1,5 +1,11 @@
 {
-  "projects": {
-    "default": "nuestrodinero"
+  "targets": {
+    "nuestrodinero": {
+      "hosting": {
+        "nuestrodinero-frontend": [
+          "nuestrodinero"
+        ]
+      }
+    }
   }
 }

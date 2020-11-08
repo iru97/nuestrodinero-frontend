@@ -1,12 +1,22 @@
 {
-  "hosting": {
-    "public": "dist/nuestrodinero-frontend/browser",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "rewrites": [
-      {
-        "source": "**",
-        "function": "ssr"
-      }
-    ]
+  "hosting": [
+    {
+      "target": "nuestrodinero-frontend",
+      "public": "dist\\nuestrodinero-frontend\\dist\\nuestrodinero-frontend\\browser",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "ssr"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "source": "dist/nuestrodinero-frontend"
   }
 }

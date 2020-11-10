@@ -28,18 +28,17 @@ export class BoeService {
       Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())
     );
     end = new Date(Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()));
-    return this.http
-      .get<Contract[]>(
-        `${
-          this.url
-        }/contracts?dateStart=${start.getTime()}&dateEnd=${end.getTime()}`
-      )
-      .pipe(
-        tap((contractCollection) => {
-          this.saveContractsToState(contractCollection, start, end);
-        }),
-        catchError(this.adErrHandler.bind(this))
-      );
+    return (
+      this.http
+        // .get<Contract[]>(`${this.url}/contracts?dateStart=${start.getTime()}&dateEnd=${end.getTime()}`)
+        .get<Contract[]>(`${this.url}/mapped-json?boeid=BOE-B-2020-39570`)
+        .pipe(
+          tap((contractCollection) => {
+            this.saveContractsToState(contractCollection, start, end);
+          }),
+          catchError(this.adErrHandler.bind(this))
+        )
+    );
   }
 
   private saveContractsToState(

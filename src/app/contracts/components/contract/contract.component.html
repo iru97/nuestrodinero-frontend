@@ -1,4 +1,36 @@
-<mat-card>
+<div class="card">
+  <div class="card-title" fxLayout="row" fxLayoutAlign="space-between center">
+    <span> {{ contract.metadata.date | date: 'EEEE, d MMMM y' }} </span>
+    <span class="error-text">
+      {{ totalSpent | currency: 'EUR':'symbol':'.2-2' }}
+    </span>
+    <span
+      [ngClass]="{
+        'success-text': porcentaje >= 60,
+        'error-text': porcentaje < 60
+      }"
+    >
+      {{ porcentaje }} % de información
+    </span>
+  </div>
+  <div class="card-content">
+    <app-card-section title="Adjudicador">
+      <app-contracting-authority
+        [contractingAuthority]="contract.content.contractAuthority"
+      ></app-contracting-authority>
+    </app-card-section>
+    <app-card-section title="Adjudicatarios"> some section </app-card-section>
+    <app-card-section title="CPV y descripciones">
+      <app-description
+        fxFlex
+        [descriptions]="contract.content.description"
+        [details]="contract.content.details"
+      ></app-description>
+    </app-card-section>
+  </div>
+</div>
+
+<!-- <mat-card>
   <mat-card-header>
     <mat-card-title>
       [{{ contract.metadata.date | date: 'shortDate' }}] -
@@ -20,7 +52,7 @@
       {{ porcentaje }} % de información
     </mat-card-subtitle>
   </mat-card-header>
-  <!-- Contenido -->
+
   <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
     <div
       fxLayout="column"
@@ -28,13 +60,13 @@
       fxLayout.gt-md="row"
       fxLayoutAlign.gt-md="start stretch"
     >
-      <!-- Adjudicador -->
+   
       <app-contracting-authority
         fxFlex.gt-md="50"
         [contractingAuthority]="contract.content.contractAuthority"
       ></app-contracting-authority>
 
-      <!-- Adjudicatarios y ofertas -->
+
       <app-sellers-offers
         fxFlex.gt-md="50"
         [sellers]="contract.content.awardees"
@@ -43,7 +75,7 @@
       ></app-sellers-offers>
     </div>
 
-    <!-- Descripciones y detalles -->
+    
     <app-description
       fxFlex
       [descriptions]="contract.content.description"
@@ -56,4 +88,4 @@
       Ver PDF
     </button>
   </mat-card-actions>
-</mat-card>
+</mat-card> -->

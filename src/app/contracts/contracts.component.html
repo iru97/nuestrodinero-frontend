@@ -1,17 +1,11 @@
 <div class="contracts-list">
-  <div
-    fxLayout="column"
-    fxLayoutAlign="start stretch"
-    fxLayoutGap="1em"
-    *ngIf="contractsCollection.length; else noContent"
-  >
-    <app-contract
-      *ngFor="let contract of contractsCollection"
-      [contract]="contract"
-    ></app-contract>
+  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1em">
+    <app-contract [contract]="contract"></app-contract>
   </div>
 </div>
 
 <ng-template #noContent>
   <app-no-content-card></app-no-content-card>
 </ng-template>
+<!-- *ngIf="contractsCollection.length; else noContent" -->
+<!-- *ngFor="let contract of contractsCollection" -->

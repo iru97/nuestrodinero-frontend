@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Contract } from './contract.model';
 import { numberOfFieldsWithValue } from 'src/app/utils';
+import { sample } from './mocked';
 
 @Component({
   selector: 'app-contract',

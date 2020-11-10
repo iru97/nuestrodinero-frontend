@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppState, defaultState } from '../core/app.state';
 import { AppStoreService } from '../core';
 import { isPlatformBrowser } from '@angular/common';
+import { sample } from './components/contract/mocked';
 
 @Component({
   selector: 'app-contracts',
@@ -23,7 +24,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class ContractsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   contractsCollection: Contract[] = [];
-  privat;
+  contract = sample;
 
   constructor(
     private activatedRoute: ActivatedRoute,

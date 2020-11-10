@@ -1,3 +1,21 @@
 :host {
   width: 100%;
 }
+
+.wrapper {
+  max-height: 15rem;
+  overflow-y: scroll;
+}
+
+.description-card {
+  background-color: white;
+
+  .description-header {
+    font-weight: bold;
+    font-size: larger;
+  }
+
+  .description-content {
+    font-size: smaller;
+  }
+}

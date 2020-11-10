@@ -14,19 +14,12 @@ export class DescriptionComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    if (
-      this.details &&
-      this.descriptions &&
-      this.details.length > this.descriptions.length
-    ) {
+    if (this.details.length > this.descriptions.length) {
       this.largerList = [...this.details];
-    }
-
-    if (
-      this.descriptions &&
-      this.details &&
-      this.descriptions.length > this.details.length
-    ) {
+    } else if (this.details.length < this.descriptions.length) {
+      this.largerList = [...this.descriptions];
+    } else {
+      // they are equal length
       this.largerList = [...this.descriptions];
     }
   }

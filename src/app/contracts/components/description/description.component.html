@@ -1,22 +1,6 @@
-<div
-  fxLayout.lt-md="column"
-  fxLayoutAlign.lt-md="start stretch"
-  fxLayout="row"
-  fxLayoutAlign="center flex-start"
->
-  <div class="description-card" fxLayout="column" fxLayoutAlign="start stretch">
-    <div class="description-header"></div>
-    <div class="descipriton-content"></div>
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0.5rem" class="wrapper">
+  <div class="description-card" fxLayout="column" fxLayoutAlign="start stretch" *ngFor="let item of largerList; let i = index">
+    <div class="description-header">{{ details[i] ? details[i] : '' }}</div>
+    <div class="descipriton-content">{{ descriptions[i] ? descriptions[i] : '' }}</div>
   </div>
-
-  <app-display-list
-    [items]="details"
-    title="Detalles"
-    fxFlex="50"
-  ></app-display-list>
-  <app-display-list
-    [items]="descriptions"
-    title="Descripciones"
-    fxFlex="50"
-  ></app-display-list>
 </div>

@@ -1,14 +1,9 @@
-<div>
-  <span class="mat-h4 mat-body-strong section-title">Adjudicatarios</span>
-  <div
-    *ngFor="let seller of sellers; index as i"
-    fxLayout.lt-md="column"
-    fxLayoutAlign.lt-md="start stetch"
-  >
-    <div fxLayout="column" fxLayoutAlign="start stretch">
-      <app-label-value label="PYME">
-        {{ seller.pyme | yesNo }}
-      </app-label-value>
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <div fxFlex="5" fxLayout="row" fxLayoutAlign="center center">
+    <mat-icon class="nav" (click)="scrollLeft(carrousel)">navigate_before</mat-icon>
+  </div>
+  <div class="carrousel" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="1rem" fxFlex="90" #carrousel>
+    <div *ngFor="let seller of sellers; index as i" class="card" fxLayout="column" fxLayoutAlign="start start">
       <app-label-value label="Nombre">
         {{ seller.name }}
       </app-label-value>
@@ -18,14 +13,18 @@
       <app-label-value label="Dirección">
         {{ seller.address }}
       </app-label-value>
-      <app-label-value label="Objeto">
+      <app-label-value label="Razón">
         {{ offerValues[i]?.text }}
       </app-label-value>
-      <app-label-value label="Coste">
+      <app-label-value label="Ingreso">
         {{ offerValues[i]?.value | currency: 'EUR':'symbol':'.2-2' }}
       </app-label-value>
+      <app-label-value label="PYME">
+        {{ seller.pyme | yesNo }}
+      </app-label-value>
     </div>
-
-    <mat-divider style="position: relative"></mat-divider>
+  </div>
+  <div fxFlex="5" fxLayout="row" fxLayoutAlign="center center">
+    <mat-icon class="nav" (click)="scrollRight(carrousel)">navigate_next</mat-icon>
   </div>
 </div>

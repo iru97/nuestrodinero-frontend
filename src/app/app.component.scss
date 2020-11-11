@@ -1,39 +1,32 @@
 // less than md
-@media screen and (max-width: 60em) {
-  :host {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.1fr 1fr 0.1fr;
-    gap: 1px 1px;
-    grid-template-areas: 'header' 'content' 'footer';
-    height: 100%;
-    width: 100%;
-  }
-}
+// @media screen and (max-width: 60em) {
+//   :host {
+//     display: grid;
+//     grid-template-columns: 1fr;
+//     grid-template-rows: 0.1fr 1fr 0.1fr;
+//     gap: 1px 1px;
+//     grid-template-areas: 'header' 'content' 'footer';
+//     height: 100%;
+//     width: 100%;
+//   }
+// }
 
 // greater than md
 @media screen and (min-width: 60.1em) {
   :host {
-    display: grid;
-    grid-template-columns: 0.2fr 1fr 0.2fr;
-    grid-template-rows: 0.1fr 1fr 0.1fr;
-    gap: 1px 1px;
-    grid-template-areas: 'header header header' 'leftad content rightad' 'footer footer footer';
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
   }
 }
 
-app-header {
-  grid-area: header;
-}
-
-#app-content {
-  grid-area: content;
-}
-
+app-header,
 app-footer {
-  grid-area: footer;
+  height: 8vh;
+}
+
+.app-wrapper {
+  min-height: 84vh;
 }
 
 .support-btn {

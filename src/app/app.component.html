@@ -1,22 +1,26 @@
-<app-header></app-header>
-<app-google-ad fxHide.lt-md></app-google-ad>
-<div
-  id="app-content"
-  fxLayout="column"
-  fxLayoutAlign="start stretch"
-  fxLayoutGap="0.1em"
->
-  <app-date-range></app-date-range>
-  <router-outlet *ngIf="!isLoading; else isLoadingTemplate"></router-outlet>
-</div>
-<app-google-ad fxHide.lt-md></app-google-ad>
-<app-footer></app-footer>
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <!-- Header -->
+  <app-header></app-header>
+  <!-- App content-->
+  <div class="app-wrapper" fxLayout="row" fxLayoutAlign="start stretch">
+    <app-google-ad fxHide.lt-md fxFlex="10"></app-google-ad>
 
-<app-scroll-top></app-scroll-top>
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="80">
+      <app-date-range fxFlex="10"></app-date-range>
+      <router-outlet *ngIf="!isLoading; else isLoadingTemplate"></router-outlet>
+    </div>
+
+    <app-google-ad fxHide.lt-md fxFlex="10"></app-google-ad>
+  </div>
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>
 
 <ng-template #isLoadingTemplate>
   <app-loading-overlay></app-loading-overlay>
 </ng-template>
+
+<app-scroll-top></app-scroll-top>
 
 <div class="support-btn" fxHide.lt-md>
   <a href="https://www.buymeacoffee.com/franic3" target="_blank">

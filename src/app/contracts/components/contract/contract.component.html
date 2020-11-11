@@ -15,17 +15,17 @@
   </div>
   <div class="card-content">
     <app-card-section title="Adjudicador">
-      <app-contracting-authority
-        [contractingAuthority]="contract.content.contractAuthority"
-      ></app-contracting-authority>
+      <app-contracting-authority [contractingAuthority]="contract.content.contractAuthority"></app-contracting-authority>
     </app-card-section>
-    <app-card-section title="Adjudicatarios"> some section </app-card-section>
+    <app-card-section title="Adjudicatarios">
+      <app-sellers-offers
+        [sellers]="contract.content.awardees"
+        [offerValues]="contract.content.offerValues"
+        [offersReceived]="contract.content.offersReceived"
+      ></app-sellers-offers>
+    </app-card-section>
     <app-card-section title="CPV y descripciones">
-      <app-description
-        fxFlex
-        [descriptions]="contract.content.description"
-        [details]="contract.content.details"
-      ></app-description>
+      <app-description fxFlex [descriptions]="contract.content.description" [details]="contract.content.details"></app-description>
     </app-card-section>
   </div>
 </div>

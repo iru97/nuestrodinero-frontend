@@ -1,0 +1,14 @@
+.carrousel {
+  overflow-x: hidden;
+
+  .card {
+    background-color: white;
+    min-width: 20rem;
+    box-sizing: border-box;
+    padding: 0.5rem;
+  }
+}
+.nav {
+  cursor: pointer;
+  transform: scale(2);
+}

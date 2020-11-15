@@ -1,0 +1,32 @@
+<!-- Adjudicador -->
+<div class="data-block">
+  <div class="title">Adjudicador</div>
+
+  <app-label-value label="Nombre">
+    {{ contractingAuthority.name }}
+  </app-label-value>
+  <app-label-value label="Actividad">
+    {{ contractingAuthority.activity }}
+  </app-label-value>
+  <app-label-value label="Tipo">
+    {{ contractingAuthority.activityType }}
+  </app-label-value>
+</div>
+
+<!-- Adjudicatarios -->
+<div class="data-block">
+  <div class="title">Adjudicatarios</div>
+  <div fxLayout="column" class="table" fxLayoutAlign="start stretch">
+    <div
+      *ngFor="let awardee of awardees; let i = index"
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+      class="row"
+    >
+      <span> {{ awardees[i].name }} </span>
+      <span class="success-text">
+        {{ offerValues[i].value | currency: 'EUR':'symbol':'.2-2' }}</span
+      >
+    </div>
+  </div>
+</div>

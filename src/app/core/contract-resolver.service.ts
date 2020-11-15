@@ -5,10 +5,10 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AppState } from './app.state';
-import { Observable, of, forkJoin } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { BoeService } from './boe.service';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
-import { map, tap, take, takeLast, last } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Contract } from '../contracts/components/contract/contract.model';
 import { isPlatformServer, isPlatformBrowser } from '@angular/common';
 import { AppStoreService } from './app-store.service';

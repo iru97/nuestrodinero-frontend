@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+@media screen and (min-width: 60.1em) {
+  :host {
+    font-size: 1.5rem;
+  }
+}

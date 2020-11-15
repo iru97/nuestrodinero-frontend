@@ -1,3 +1,12 @@
 :host > div > div:first-child {
   padding-top: 2%;
 }
+
+:host {
+  background-color: white;
+  padding: 0.5rem;
+}
+
+button.mat-primary {
+  background-color: #79d6b5;
+}

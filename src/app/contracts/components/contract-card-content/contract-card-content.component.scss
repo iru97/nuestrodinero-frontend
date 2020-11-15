@@ -1,0 +1,35 @@
+.title {
+  background-color: #3f51b5;
+  box-sizing: border-box;
+  color: white;
+  padding: 0.5rem;
+  max-width: 10rem;
+  text-align: center;
+}
+
+.table {
+  font-size: 1rem;
+  font-weight: normal;
+
+  .row {
+    padding: 0.5rem;
+  }
+
+  .row:nth-child(odd) {
+    background-color: #f4f1f1;
+  }
+}
+
+.data-block {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 60.1em) {
+  .title {
+    font-size: 1.2rem;
+  }
+  .table {
+    font-size: 1.05rem;
+  }
+}

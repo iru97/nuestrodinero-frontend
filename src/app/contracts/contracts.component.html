@@ -5,10 +5,10 @@
     fxLayoutGap="1em"
     *ngIf="contractsCollection.length; else noContent"
   >
-    <app-contract
+    <app-contract-card
       *ngFor="let contract of contractsCollection"
       [contract]="contract"
-    ></app-contract>
+    ></app-contract-card>
   </div>
 </div>
 

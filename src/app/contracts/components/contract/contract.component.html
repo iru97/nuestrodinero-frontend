@@ -10,15 +10,6 @@
         totalSpent | currency: 'EUR':'symbol':'.2-2'
       }}</span>
     </mat-card-title>
-    <mat-card-subtitle
-      testId="porcentaje"
-      [ngClass]="{
-        'success-text': porcentaje >= 60,
-        'error-text': porcentaje < 60
-      }"
-    >
-      {{ porcentaje }} % de información
-    </mat-card-subtitle>
   </mat-card-header>
   <!-- Contenido -->
   <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
@@ -55,5 +46,6 @@
     <button mat-raised-button color="primary" (click)="viewPdf()">
       Ver PDF
     </button>
+    <button mat-raised-button color="primary" (click)="goBack()">Atrás</button>
   </mat-card-actions>
 </mat-card>

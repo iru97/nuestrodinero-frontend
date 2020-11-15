@@ -49,7 +49,7 @@
     <button
       mat-fab
       color="primary"
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || (searchDisabeld$ | async)"
       (click)="doSearch()"
     >
       <mat-icon> search </mat-icon>

@@ -15,8 +15,12 @@ export class BoeService {
   private url = environment.serverUrl;
 
   private isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private isSearchDisabled: BehaviorSubject<boolean> = new BehaviorSubject(
+    false
+  );
 
   isLoading$ = this.isLoading.asObservable();
+  isSearchDisabled$ = this.isSearchDisabled.asObservable();
 
   constructor(private http: HttpClient, private appStore: AppStoreService) {}
 
@@ -40,6 +44,14 @@ export class BoeService {
         }),
         catchError(this.adErrHandler.bind(this))
       );
+  }
+
+  getAdByBoeId(boeId: string): Observable<Contract> {
+    return this.http.get<Contract>(`${this.url}/contract?boeid=${boeId}`);
+  }
+
+  setSearchState(state: boolean): void {
+    this.isSearchDisabled.next(state);
   }
 
   private saveContractsToState(

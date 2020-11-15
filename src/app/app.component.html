@@ -1,5 +1,4 @@
 <app-header></app-header>
-<app-google-ad fxHide.lt-md></app-google-ad>
 <div
   id="app-content"
   fxLayout="column"
@@ -9,16 +8,15 @@
   <app-date-range></app-date-range>
   <router-outlet *ngIf="!isLoading; else isLoadingTemplate"></router-outlet>
 </div>
-<app-google-ad fxHide.lt-md></app-google-ad>
 <app-footer></app-footer>
 
-<app-scroll-top></app-scroll-top>
+<!-- <app-scroll-top></app-scroll-top> -->
 
 <ng-template #isLoadingTemplate>
   <app-loading-overlay></app-loading-overlay>
 </ng-template>
 
-<div class="support-btn" fxHide.lt-md>
+<!-- <div class="support-btn" fxHide.lt-md>
   <a href="https://www.buymeacoffee.com/franic3" target="_blank">
     <img
       src="https://img.buymeacoffee.com/button-api/?text=Quieres colaborar?&emoji=🍌&slug=franic3&button_colour=79D6B5&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00"
@@ -32,4 +30,4 @@
       src="https://img.buymeacoffee.com/button-api/?text= &emoji=🍌&slug=franic3&button_colour=79D6B5&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00"
     />
   </a>
-</div>
+</div> -->

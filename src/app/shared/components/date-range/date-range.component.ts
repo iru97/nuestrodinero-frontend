@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription, PartialObserver } from 'rxjs';
+import { Observable } from 'rxjs';
 import { BoeService } from 'src/app/core';
 
 @Component({
@@ -13,13 +14,14 @@ export class DateRangeComponent implements OnInit, OnDestroy {
   readonly MAX_DATE: Date = new Date();
 
   minEndDate: Date;
-
+  searchDisabeld$: Observable<boolean>;
   form: FormGroup;
 
   private subscription: Subscription;
   private observer: PartialObserver<Date>;
 
   constructor(private boeService: BoeService) {
+    this.searchDisabeld$ = this.boeService.isSearchDisabled$;
     this.minEndDate = new Date();
     this.form = new FormGroup({
       startDate: new FormControl(

@@ -1,0 +1,13 @@
+<app-contract-card-header
+  [date]="contract.metadata.date"
+  [totalSpent]="totalSpent"
+></app-contract-card-header>
+<app-contract-card-content
+  [awardees]="contract.content.awardees"
+  [offerValues]="contract.content.offerValues"
+  [contractingAuthority]="contract.content.contractAuthority"
+></app-contract-card-content>
+<app-contract-card-footer
+  [boeUrl]="contract.metadata.pdfUrl"
+  [boeId]="contract.metadata.identifier"
+></app-contract-card-footer>

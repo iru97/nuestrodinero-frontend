@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ContractingAuthority } from '../contracting-authority/contracting-authority.model';
+import {
+  ContractingAuthority,
+  emptyContractingAuthority,
+} from '../contracting-authority/contracting-authority.model';
 import { OfferValues } from '../sellers-offers/offerValues.model';
 import { Seller } from '../sellers-offers/sellers.model';
 
@@ -9,9 +12,10 @@ import { Seller } from '../sellers-offers/sellers.model';
   styleUrls: ['./contract-card-content.component.scss'],
 })
 export class ContractCardContentComponent implements OnInit {
-  @Input() contractingAuthority: ContractingAuthority;
-  @Input() awardees: Seller[];
-  @Input() offerValues: OfferValues[];
+  @Input()
+  contractingAuthority: ContractingAuthority = emptyContractingAuthority();
+  @Input() awardees: Seller[] = [];
+  @Input() offerValues: OfferValues[] = [];
 
   constructor() {}
 

@@ -7,6 +7,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { OfferValues } from '../sellers-offers/offerValues.model';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { YesNoPipe } from '../../pipes/yes-no.pipe';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { emptySeller } from '../sellers-offers/sellers.model';
 
 describe('ContractComponent', () => {
   let component: ContractComponent;
@@ -19,7 +22,7 @@ describe('ContractComponent', () => {
         ...CONTRACTS_SHARED_COMPONENTS,
         YesNoPipe,
       ],
-      imports: [SharedModule],
+      imports: [SharedModule, RouterTestingModule, HttpClientTestingModule],
     }).compileComponents();
   }));
 
@@ -30,7 +33,7 @@ describe('ContractComponent', () => {
     fixture.detectChanges();
   });
 
-  it.only('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
@@ -52,17 +55,7 @@ describe('ContractComponent', () => {
   });
 
   it('should render the total cost of offers', () => {
-    const ofertas: OfferValues[] = [
-      {
-        value: 2,
-        text: '',
-      },
-      {
-        value: 2,
-        text: '',
-      },
-    ];
-    component.contract.content.offerValues = [...ofertas];
+    component.totalSpent = 4;
     // Act
     fixture.detectChanges();
 

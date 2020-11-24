@@ -37,7 +37,7 @@ describe('ContractsComponent', () => {
   it('should render N contracts', () => {
     component.contractsCollection = [emptyContract()];
     fixture.detectChanges();
-    const element = fixture.debugElement.query(By.css('app-contract'));
+    const element = fixture.debugElement.query(By.css('app-contract-card'));
     expect(element).toBeTruthy();
   });
 

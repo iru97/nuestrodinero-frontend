@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ContractResolverService } from './core/contract-resolver.service';
+import { PageInfoComponent } from './page-info/page-info.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,11 @@ const routes: Routes = [
     resolve: {
       estadisticas: ContractResolverService,
     },
+  },
+  {
+    path: 'informacion',
+    loadChildren: () =>
+      import('./page-info/page-info.module').then((m) => m.PageInfoModule),
   },
 ];
 

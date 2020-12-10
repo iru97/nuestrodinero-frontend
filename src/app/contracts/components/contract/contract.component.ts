@@ -24,7 +24,7 @@ export class ContractComponent implements OnInit, OnDestroy {
     private meta: Meta
   ) {
     this.router.url.subscribe((r) => (this.boeId = r.shift().path));
-    this.boeService.setSearchState(true);
+    this.boeService.disableSearch();
   }
 
   ngOnInit(): void {
@@ -74,6 +74,6 @@ export class ContractComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.boeService.setSearchState(false);
+    this.boeService.enableSearch();
   }
 }

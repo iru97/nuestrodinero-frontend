@@ -50,8 +50,12 @@ export class BoeService {
     return this.http.get<Contract>(`${this.url}/contract?boeid=${boeId}`);
   }
 
-  setSearchState(state: boolean): void {
-    this.isSearchDisabled.next(state);
+  disableSearch(): void {
+    this.isSearchDisabled.next(true);
+  }
+
+  enableSearch(): void {
+    this.isSearchDisabled.next(false);
   }
 
   private saveContractsToState(

@@ -56,8 +56,8 @@ export class DateRangeComponent implements OnInit, OnDestroy {
 
   private updateUrl(startDate: Date, endDate: Date): void {
     // Format for url
-    let start = startDate.toISOString().substr(0, startDate.toISOString().indexOf('T'));
-    let end = endDate.toISOString().substr(0, endDate.toISOString().indexOf('T'));
+    let start = this.buildDate(startDate);
+    let end = this.buildDate(endDate);
     let queryIndex = this.location.path().indexOf('?');
 
     if (queryIndex !== -1) {
@@ -75,6 +75,19 @@ export class DateRangeComponent implements OnInit, OnDestroy {
         this.doSearch();
       }
     });
+  }
+
+  private buildDate(date: Date): string {
+    let dd: string = this.appendZeroIfLessThan10(date.getDate());
+    let month = date.getMonth() + 1;
+    let mm: string = this.appendZeroIfLessThan10(month);
+    let yyyy: string = String(date.getFullYear());
+
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  private appendZeroIfLessThan10(input: number): string {
+    return input < 10 ? `0${input}` : `${input}`;
   }
 
   ngOnDestroy(): void {

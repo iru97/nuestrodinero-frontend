@@ -6,27 +6,27 @@ import { normalizeStringReplacement } from 'src/app/utils';
 
 // group by activity & moneySpent
 export const activityStats = (contractCollection: Contract[]): Stats[] => {
-  const totalCost: TotalCostPipe = new TotalCostPipe();
+  const caaSpent: ContractingAuthoritiesSpent[] = contractCollection.map(({ content }) => {
+    let totalSpent = 0;
 
-  const caaSpent: ContractingAuthoritiesSpent[] = contractCollection.map(
-    (c) => {
-      let totalSpent: number = totalCost.transform(c.content.offerValues);
-      return { ...c.content.contractAuthority, totalSpent };
+    if (content.awardees.length === 1) {
+      totalSpent += content.offerValues[0].value;
+    } else if (content.awardees.length > 1) {
+      content.awardees.forEach((_, index) => {
+        totalSpent += content.offerValues[index].value;
+      });
     }
-  );
+
+    return { ...content.contractAuthority, totalSpent };
+  });
 
   const caaSpentGroup = _.groupBy(caaSpent, (value) => {
-    return value.activity
-      ? normalizeStringReplacement(value.activity, /[\s\.,]/g, '_')
-      : 'Sin_actividad_definida';
+    return value.activity ? normalizeStringReplacement(value.activity, /[\s\.,]/g, '_') : 'Sin_actividad_definida';
   });
 
   let stats: Stats[] = [];
 
-  _.mapObject(caaSpentGroup, function (
-    val: ContractingAuthoritiesSpent[],
-    key: string
-  ) {
+  _.mapObject(caaSpentGroup, function (val: ContractingAuthoritiesSpent[], key: string) {
     const mappedToStats: Stats = {
       label: normalzieLabel(key),
       value: val.reduce((acc, curr) => {

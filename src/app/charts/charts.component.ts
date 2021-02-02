@@ -10,24 +10,8 @@ import { MatSelectChange } from '@angular/material/select';
 import { activityStats } from './statistics/activity.stats';
 import { isPlatformBrowser, CurrencyPipe } from '@angular/common';
 import { OfferValues } from '../contracts/components/sellers-offers/offerValues.model';
-import {
-  Chart,
-  ChartData,
-  ChartOptions,
-  ChartConfiguration,
-  ChartTooltipItem,
-  PositionType,
-} from 'chart.js';
-import {
-  Component,
-  OnInit,
-  PLATFORM_ID,
-  Inject,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-} from '@angular/core';
+import { Chart, ChartData, ChartOptions, ChartConfiguration, ChartTooltipItem, PositionType } from 'chart.js';
+import { Component, OnInit, PLATFORM_ID, Inject, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-charts',
@@ -51,11 +35,7 @@ export class ChartsComponent implements OnInit, OnDestroy, AfterViewInit {
   chartjsOptions: ChartOptions;
   chartjsConfig: ChartConfiguration;
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private appStore: AppStoreService,
-    @Inject(PLATFORM_ID) private platformId
-  ) {
+  constructor(private activatedRoute: ActivatedRoute, private appStore: AppStoreService, @Inject(PLATFORM_ID) private platformId) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -65,10 +45,7 @@ export class ChartsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.subscription = this.appStore.appState$.subscribe((state) => {
         this.appState = state;
 
-        this.offerValues = state.contractCollection.reduce(
-          (acc, curr) => acc.concat(curr.content.offerValues),
-          []
-        );
+        this.offerValues = state.contractCollection.reduce((acc, curr) => acc.concat(curr.content.offerValues), []);
       });
     } else {
       // SSR
@@ -78,10 +55,7 @@ export class ChartsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.appState = defaultState();
       }
 
-      this.offerValues = this.appState.contractCollection.reduce(
-        (acc, curr) => acc.concat(curr.content.offerValues),
-        []
-      );
+      this.offerValues = this.appState.contractCollection.reduce((acc, curr) => acc.concat(curr.content.offerValues), []);
     }
   }
 
@@ -100,6 +74,7 @@ export class ChartsComponent implements OnInit, OnDestroy, AfterViewInit {
         data = _.sortBy(actStat, 'value');
         break;
       case CHART_TYPES.PYMES:
+        debugger;
         let pymeStat: Stats[] = pymeStats(this.appState.contractCollection);
         data = _.sortBy(pymeStat, 'value');
         break;

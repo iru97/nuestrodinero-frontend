@@ -3,25 +3,14 @@
     <mat-card-header fxFlex="10">
       <mat-card-title>
         Datos del {{ appState.dateStart | date: 'shortDate' }}
-        <span
-          *ngIf="
-            appState.dateEnd &&
-            appState.dateEnd.getTime() !== appState.dateStart.getTime()
-          "
-        >
-          al {{ appState.dateEnd | date: 'shortDate' }}
-        </span>
+        <span *ngIf="appState.dateEnd && appState.dateEnd.getTime() !== appState.dateStart.getTime()"> al {{ appState.dateEnd | date: 'shortDate' }} </span>
       </mat-card-title>
       <mat-card-subtitle>
         Total gastado:
-        {{ offerValues | totalCost | currency: 'EUR':'symbol':'.2-2' }}
+        {{ appState.contractCollection | totalCost | currency: 'EUR':'symbol':'.2-2' }}
       </mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content
-      fxLayout="column"
-      fxLayoutAlign="start stretch"
-      fxFlex="90"
-    >
+    <mat-card-content fxLayout="column" fxLayoutAlign="start stretch" fxFlex="90">
       <ng-container *ngTemplateOutlet="chartOptionsTpl"></ng-container>
       <ng-container *ngTemplateOutlet="chartTpl"></ng-container>
     </mat-card-content>
@@ -35,10 +24,7 @@
   <div fxFlex="10">
     <mat-form-field fxFlex>
       <mat-label>Graficas por:</mat-label>
-      <mat-select
-        (selectionChange)="changeChartType($event)"
-        [value]="chartOptions[0]"
-      >
+      <mat-select (selectionChange)="changeChartType($event)" [value]="chartOptions[0]">
         <mat-option *ngFor="let option of chartOptions" [value]="option">
           {{ option }}
         </mat-option>
@@ -48,13 +34,7 @@
 </ng-template>
 
 <ng-template #chartTpl>
-  <div
-    *ngIf="isBrowser"
-    #chartContainer
-    id="chartContainer"
-    ngClass.gt-sm="max-width"
-    (window:resize)="onResize()"
-  >
+  <div *ngIf="isBrowser" #chartContainer id="chartContainer" ngClass.gt-sm="max-width" (window:resize)="onResize()">
     <canvas id="chart"></canvas>
   </div>
 </ng-template>

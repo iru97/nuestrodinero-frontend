@@ -1,3 +1,20 @@
 :host {
   height: 100%;
 }
+
+.link {
+  text-decoration: none;
+  color: white;
+
+  span {
+    font-size: inherit;
+    transition: 0.5s;
+  }
+
+  &:hover {
+    span {
+      font-size: 2rem;
+      transition: 0.5s;
+    }
+  }
+}

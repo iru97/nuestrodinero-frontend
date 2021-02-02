@@ -11,24 +11,21 @@ const routes: Routes = [
   },
   {
     path: 'contratos',
-    loadChildren: () =>
-      import('./contracts/contracts.module').then((m) => m.ContractsModule),
+    loadChildren: () => import('./contracts/contracts.module').then((m) => m.ContractsModule),
     resolve: {
       appState: ContractResolverService,
     },
   },
   {
     path: 'estadisticas',
-    loadChildren: () =>
-      import('./charts/charts.module').then((m) => m.ChartsModule),
+    loadChildren: () => import('./charts/charts.module').then((m) => m.ChartsModule),
     resolve: {
       estadisticas: ContractResolverService,
     },
   },
   {
     path: 'informacion',
-    loadChildren: () =>
-      import('./page-info/page-info.module').then((m) => m.PageInfoModule),
+    loadChildren: () => import('./page-info/page-info.module').then((m) => m.PageInfoModule),
   },
 ];
 

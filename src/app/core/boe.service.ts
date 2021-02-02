@@ -15,9 +15,7 @@ export class BoeService {
   private url = environment.serverUrl;
 
   private isLoading: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private isSearchDisabled: BehaviorSubject<boolean> = new BehaviorSubject(
-    false
-  );
+  private isSearchDisabled: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   isLoading$ = this.isLoading.asObservable();
   isSearchDisabled$ = this.isSearchDisabled.asObservable();
@@ -28,22 +26,15 @@ export class BoeService {
     this.isLoading.next(true);
 
     // Parse to UTC
-    start = new Date(
-      Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())
-    );
+    start = new Date(Date.UTC(start.getFullYear(), start.getMonth(), start.getDate()));
     end = new Date(Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()));
-    return this.http
-      .get<Contract[]>(
-        `${
-          this.url
-        }/contracts?dateStart=${start.getTime()}&dateEnd=${end.getTime()}`
-      )
-      .pipe(
-        tap((contractCollection) => {
-          this.saveContractsToState(contractCollection, start, end);
-        }),
-        catchError(this.adErrHandler.bind(this))
-      );
+
+    return this.http.get<Contract[]>(`${this.url}/contracts?dateStart=${start.getTime()}&dateEnd=${end.getTime()}`).pipe(
+      tap((contractCollection) => {
+        this.saveContractsToState(contractCollection, start, end);
+      }),
+      catchError(this.adErrHandler.bind(this))
+    );
   }
 
   getAdByBoeId(boeId: string): Observable<Contract> {
@@ -58,11 +49,7 @@ export class BoeService {
     this.isSearchDisabled.next(false);
   }
 
-  private saveContractsToState(
-    contracts: Contract[],
-    start: Date,
-    end: Date
-  ): void {
+  private saveContractsToState(contracts: Contract[], start: Date, end: Date): void {
     let state: AppState = {
       contractCollection: contracts,
       dateStart: start,
